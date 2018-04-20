@@ -1,20 +1,43 @@
 package Heaps;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Random;
-
 public class Heap {
-	Integer[] heaps; // items stored in here
-	int lastLeft = 0; // only used this variable when build heap with given items,it point to the last left node
-	int lastPostion = 1; // start with 1;
-
+	private Integer[] heaps; // items stored in here
+	private int lastLeft = 0; // only used this variable when build heap with given items,it point to the last left node
+	private int lastPostion = 1; // start with 1;
 	public Heap() {
 		super();
 		// default size is 100 if start with an empty heap,it can become big as need, for example when it is full
 		this.heaps = new Integer[100];
 	}
 
+	public void delete(int ele) {
+		int minValue = heaps[1];
+		int num = decreaseKey(ele, Math.abs(ele-minValue)+1);
+		while(num-- > 0) {
+			removeFirst();
+		}
+	}
+	
+	public int decreaseKey(int ele,int devalue) {
+		int result=0;
+		for(int i=1;i<=lastPostion;i++) {
+			int num = heaps[i];
+			if(num == ele) {
+				result++;
+				int targetPostion = i;
+				int parent = targetPostion/2;
+				int currentValue = num-devalue;
+				while(parent != 0 && currentValue < heaps[parent]) {
+					heaps[targetPostion] = heaps[parent];
+					targetPostion = parent;
+					parent = targetPostion/2;
+				}
+				heaps[targetPostion] = currentValue;
+			}
+		}
+		return result;
+	}
+	
 	public Heap(Integer[] nums) {
 		super();
 		// make container has double size of income nums
@@ -59,10 +82,15 @@ public class Heap {
 	}
 
 	public void printSorted() {
-
+		// backup the container, and after print restore it
+		Integer[] tmp = new Integer[heaps.length];
+		int tmplastPostion = lastPostion;
+		System.arraycopy(heaps, 0, tmp, 0, heaps.length);;
 		while(this.lastPostion >0) {
 			System.out.print(this.removeFirst()+ ",");
 		}
+		lastPostion = tmplastPostion;
+		heaps = tmp;
 		System.out.println();
 	}
 	public int removeFirst() {
@@ -139,6 +167,30 @@ public class Heap {
 				buildHeap(changePostion);
 			}
 		}
+	}
+
+	public Integer[] getHeaps() {
+		return heaps;
+	}
+
+	public void setHeaps(Integer[] heaps) {
+		this.heaps = heaps;
+	}
+
+	public int getLastLeft() {
+		return lastLeft;
+	}
+
+	public void setLastLeft(int lastLeft) {
+		this.lastLeft = lastLeft;
+	}
+
+	public int getLastPostion() {
+		return lastPostion;
+	}
+
+	public void setLastPostion(int lastPostion) {
+		this.lastPostion = lastPostion;
 	}
 
 }
