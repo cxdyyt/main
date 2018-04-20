@@ -86,8 +86,9 @@ public class Heap {
 		Integer[] tmp = new Integer[heaps.length];
 		int tmplastPostion = lastPostion;
 		System.arraycopy(heaps, 0, tmp, 0, heaps.length);;
+		System.out.print("[");
 		while(this.lastPostion >0) {
-			System.out.print(this.removeFirst()+ ",");
+			System.out.print(this.removeFirst()+ ", ");
 		}
 		lastPostion = tmplastPostion;
 		heaps = tmp;

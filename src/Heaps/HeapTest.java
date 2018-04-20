@@ -1,5 +1,6 @@
 package Heaps;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
 
@@ -9,7 +10,7 @@ public class HeapTest {
 		// TODO Auto-generated method stub
 		Random rand = new Random(20);
 		Heap heap1 = new Heap();
-		int mb = 100;
+		int mb = 1000;
 		Integer ints[] = new Integer[mb];
 		int i = 0;
 		while (i < mb) {
@@ -19,14 +20,17 @@ public class HeapTest {
 			i++;
 		}
 		long ms = new Date().getTime();
-		
+		Arrays.sort(ints);
+		System.out.println(Arrays.asList(ints));
 		Heap heap2 = new Heap(ints);
-		heap1.printSorted();
-		testDecreaseKey(heap1, 17, 2);
-		//testDelete(heap1, 4);
-		heap1.printSorted();
-		long ms1 = new Date().getTime();
-		System.out.println("performance: " + (ms1 - ms));
+		verifyInvalidHeap(heap2);
+		heap2.printSorted();
+//		heap1.printSorted();
+//		//testDecreaseKey(heap1, 19996, 199999);
+//		testDelete(heap1, 1);
+//		heap1.printSorted();
+//		long ms1 = new Date().getTime();
+//		System.out.println("performance: " + (ms1 - ms));
 	}
 	
 	private static boolean testDecreaseKey(Heap heap,int ele,int devalue) {
