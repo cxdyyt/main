@@ -5,26 +5,49 @@ import java.util.Date;
 import java.util.Random;
 
 public class Heap {
-	long times = 0;
-	Integer[] heaps;
-	int lastLeft = 0;
-	int lastPostion = 0;
+	Integer[] heaps; // items stored in here
+	int lastLeft = 0; // only used this variable when build heap with given items,it point to the last left node
+	int lastPostion = 1; // start with 1;
+
+	public Heap() {
+		super();
+		// default size is 100 if start with an empty heap,it can become big as need, for example when it is full
+		this.heaps = new Integer[100];
+	}
 
 	public Heap(Integer[] nums) {
 		super();
-		int len = nums.length;
-		lastPostion = len;
-		if (len % 2 == 0) {
-			lastLeft = len;
-		} else {
-			lastLeft = len / 2 + 1;
+		// make container has double size of income nums
+		this.heaps = new Integer[2 * (nums.length + 1)];
+		int j =0;
+		for(int i=0;i<nums.length;i++) {
+			if(nums[i] != null) {
+				heaps[++j] = nums[i];
+			}
 		}
-		this.heaps = new Integer[2 * (len + 1)];
-		System.arraycopy(nums, 0, heaps, 1, len);
-		sortHeao(1);
+		lastPostion = j;
+		if (j % 2 == 0) {
+			lastLeft = j;
+		} else {
+			lastLeft = j / 2 + 1;
+		}
+		buildHeap(1);
 	}
 
 	public void insert(int ele) {
+		// if nothing in array
+		if(lastPostion == 1 && heaps[lastPostion] == null) {
+			heaps[lastPostion] = ele;
+			return;
+		}
+		lastPostion++;
+		
+		// resize array if array is two small
+		if(lastPostion > heaps.length -1) {
+			Integer[] tmp = new Integer[2*heaps.length];
+			System.arraycopy(heaps, 0, tmp, 0, heaps.length);
+			heaps = tmp;
+		}
 		int parent = lastPostion / 2;
 		int testPosition = lastPostion;
 		while (parent > 0 && heaps[parent] > ele) {
@@ -35,6 +58,13 @@ public class Heap {
 		heaps[testPosition] = ele;
 	}
 
+	public void printSorted() {
+
+		while(this.lastPostion >0) {
+			System.out.print(this.removeFirst()+ ",");
+		}
+		System.out.println();
+	}
 	public int removeFirst() {
 		int targetPostion = 1;
 		int testleftPosition = 0;
@@ -68,19 +98,18 @@ public class Heap {
 		return result;
 	}
 
-	public void sortHeao(int i) {
+	private void buildHeap(int i) {
 		if (i >= lastLeft) {
 			return;
 		}
-		times++;
 		if (heaps[i] != null) {
 			int changePostion = 0;
 			int small = 0;
 			if (heaps[2 * i] != null) {
-				sortHeao(2 * i);
+				buildHeap(2 * i);
 			}
 			if (heaps[2 * i + 1] != null) {
-				sortHeao(2 * i + 1);
+				buildHeap(2 * i + 1);
 			}
 			if (heaps[2 * i] == null && heaps[2 * i + 1] == null) {
 				return;
@@ -107,7 +136,7 @@ public class Heap {
 				int tmp = heaps[i];
 				heaps[i] = small;
 				heaps[changePostion] = tmp;
-				sortHeao(changePostion);
+				buildHeap(changePostion);
 			}
 		}
 	}
@@ -115,24 +144,29 @@ public class Heap {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Random rand = new Random();
-		Integer ints[] = new Integer[1500];
+		Heap heap1 = new Heap();
+		int mb = 100;
+		Integer ints[] = new Integer[mb];
 		int i = 0;
-		while (i < 1500) {
-			ints[i] = rand.nextInt(2000);
+		while (i < mb) {
+			int next = rand.nextInt(mb*2);
+			ints[i]=next;
+			heap1.insert(next);
 			i++;
 		}
-		// heap.buildHeao(new Integer[] { 95,11, 65, 72, 13,7});
 		long ms = new Date().getTime();
-		Heap heap = new Heap(ints);
+		
+		Heap heap2 = new Heap(ints);
+		heap1.printSorted();
+		heap2.printSorted();
+		
 		long ms1 = new Date().getTime();
-		heap.insert(0);
 		System.out.println("performance: " + (ms1 - ms));
-		System.out.println("times: " + heap.times);
-		System.out.println("sys1: " + Arrays.toString(heap.heaps));
-		while(heap.lastPostion >0) {
-			System.out.println(heap.removeFirst());
-		}
-		for (int j = 1; j < heap.heaps.length; j++) {
+		verifyInvalidHeap(heap1);
+	}
+	
+	private static void verifyInvalidHeap(Heap heap) {
+		for (int j = 1; j<=heap.heaps.length/2; j++) {
 			if (heap.heaps[j] == null) {
 				continue;
 			}
