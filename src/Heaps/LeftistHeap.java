@@ -24,9 +24,12 @@ public class LeftistHeap<T extends Comparable<T>> implements HeapInterface<T>{
 		return result;
 	}
 	public void printSorted() {
+		System.out.println();
+		System.out.print("Sorted list are: [");
 		while(top != null) {
 			System.out.print(removeFirst()+",");
 		}
+		System.out.print("]");
 		System.out.println();
 	}
 	public void insert(T t) {
@@ -58,11 +61,15 @@ public class LeftistHeap<T extends Comparable<T>> implements HeapInterface<T>{
 			return null;
 		}
 		if(node1 == null) {
-			node2.setZeroPathLength(0);
+			if(node2.getRight() == null) {
+				node2.setZeroPathLength(0);
+			}
 			return node2;
 		}
 		if(node2 == null) {
-			node1.setZeroPathLength(0);
+			if(node1.getRight() == null) {
+				node1.setZeroPathLength(0);
+			}
 			return node1;
 		}
 		T item1 = node1.getItem();
