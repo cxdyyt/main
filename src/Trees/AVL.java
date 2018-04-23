@@ -1,6 +1,7 @@
 package Trees;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -45,52 +46,42 @@ public class AVL<K extends Comparable<K>> {
 		List<Comparable<K>> result = new ArrayList<Comparable<K>>();
 		LinkedList<NodeAVL<K>> listQuence = new LinkedList<NodeAVL<K>>();
 		NodeAVL<K> handNode = beg;
-		NodeAVL<K> previousCom = null;
+		boolean isForward = true;
+		System.out.println("-------------------------------------------");
+		System.out.print("[");
 		while (handNode != null) {
 			NodeAVL<K> left = handNode.getLeft();
 			NodeAVL<K> right = handNode.getRight();
-			if (previousCom != null) {
-				if (previousCom == left) {
-					result.add(handNode.getItem());
-					previousCom =handNode; 
-					handNode = listQuence.poll();
-					continue;
-				}else if(previousCom.getRight() == handNode) {
-					if (right != null) {
-						listQuence.push(right);
-					}
-					if (left != null) {
-						listQuence.push(handNode);
-						handNode = left;
-					} else {
-						result.add(handNode.getItem());
-						previousCom = handNode;
-						handNode = listQuence.poll();
-					}
-				
-				}else {
-					result.add(handNode.getItem());
-					previousCom = handNode;
-					handNode = listQuence.poll();
-				}
-			}else {
-				if (right != null) {
-					listQuence.push(right);
-				}
-				if (left != null) {
+			if (isForward) {
+				if(left != null) {
 					listQuence.push(handNode);
 					handNode = left;
-				} else {
+					isForward = true;
+				}else {
 					result.add(handNode.getItem());
-					previousCom = handNode;
+					System.out.print(handNode.getItem()+", ");
+					if(right != null) {
+						handNode = right;
+						isForward = true;
+					}else {
+						handNode = listQuence.poll();
+						isForward = false;
+					}
+				}
+			}else {
+				result.add(handNode.getItem());
+				System.out.print(handNode.getItem()+", ");
+				if(right != null) {
+					handNode = right;
+					isForward = true;
+				}else {
 					handNode = listQuence.poll();
+					isForward = false;
 				}
 			}
 
 		}
-		for (Comparable<K> com : result) {
-			System.out.println(com);
-		}
+		System.out.println("]");
 	}
 
 	private void printlistHX(NodeAVL<K> beg) {
@@ -196,16 +187,21 @@ public class AVL<K extends Comparable<K>> {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Random rang = new Random(47);
+		List<Integer> list = new ArrayList<Integer>();
 		AVL<Integer> avl = new AVL<Integer>();
 		int i =0;
 		while(i<9) {
 			i++;
 			int tmp = rang.nextInt(100);
-			System.out.println(tmp);
+			list.add(tmp);
 			avl.push(tmp);
 		}
+		Collections.sort(list);
+		System.out.println("original items");
+		System.out.println("------------------------------");
+		System.out.println(list);
+		System.out.println("tree items");
 		avl.printlist();
-		System.out.println(avl);
 	}
 
 }
