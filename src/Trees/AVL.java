@@ -5,15 +5,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class AVL<K> {
+import Entity.NodeAVL;
 
-	Node<Comparable<K>> top;
+public class AVL<K extends Comparable<K>> {
 
-	public Node<Comparable<K>> push(Comparable<K> item) {
+	NodeAVL<K> top;
+
+	public NodeAVL<K> push(K item) {
 		if (top == null) {
-			top = new Node<Comparable<K>>();
+			top = new NodeAVL<K>();
 		}
-		Node<Comparable<K>> res = push(top, item);
+		NodeAVL<K> res = push(top, item);
 		return top;
 	}
 
@@ -26,27 +28,27 @@ public class AVL<K> {
 		printlistZX(top);
 	}
 
-	private void printlist(Node<Comparable<K>> beg) {
+	private void printlist(NodeAVL<K> beg) {
 		if (beg == null) {
 			return;
 		} else {
 			Comparable<K> item = beg.getItem();
-			Node<Comparable<K>> left = beg.getLeft();
-			Node<Comparable<K>> right = beg.getRight();
+			NodeAVL<K> left = beg.getLeft();
+			NodeAVL<K> right = beg.getRight();
 			printlist(left);
 			System.out.println(item + ",");
 			printlist(right);
 		}
 	}
 
-	private void printlistZX(Node<Comparable<K>> beg) {
+	private void printlistZX(NodeAVL<K> beg) {
 		List<Comparable<K>> result = new ArrayList<Comparable<K>>();
-		LinkedList<Node> listQuence = new LinkedList<Node>();
-		Node<Comparable<K>> handNode = beg;
-		Node<Comparable<K>> previousCom = null;
+		LinkedList<NodeAVL<K>> listQuence = new LinkedList<NodeAVL<K>>();
+		NodeAVL<K> handNode = beg;
+		NodeAVL<K> previousCom = null;
 		while (handNode != null) {
-			Node<Comparable<K>> left = handNode.getLeft();
-			Node<Comparable<K>> right = handNode.getRight();
+			NodeAVL<K> left = handNode.getLeft();
+			NodeAVL<K> right = handNode.getRight();
 			if (previousCom != null) {
 				if (previousCom == left) {
 					result.add(handNode.getItem());
@@ -91,14 +93,14 @@ public class AVL<K> {
 		}
 	}
 
-	private void printlistHX(Node<Comparable<K>> beg) {
+	private void printlistHX(NodeAVL<K> beg) {
 		List<Comparable<K>> result = new ArrayList<Comparable<K>>();
-		LinkedList<Node> listQuence = new LinkedList<Node>();
-		Node<Comparable<K>> handNode = beg;
-		Node<Comparable<K>> previousCom = null;
+		LinkedList<NodeAVL<K>> listQuence = new LinkedList<NodeAVL<K>>();
+		NodeAVL<K> handNode = beg;
+		NodeAVL<K> previousCom = null;
 		while (handNode != null) {
-			Node<Comparable<K>> left = handNode.getLeft();
-			Node<Comparable<K>> right = handNode.getRight();
+			NodeAVL<K> left = handNode.getLeft();
+			NodeAVL<K> right = handNode.getRight();
 			if (previousCom != null) {
 				if (left == previousCom || right == previousCom) {
 					result.add(handNode.getItem());
@@ -130,14 +132,14 @@ public class AVL<K> {
 		}
 	}
 
-	private Comparable<K> getItems(Node<Comparable<K>> par, Comparable item) {
+	private Comparable<K> getItems(NodeAVL<K> par, Comparable item) {
 		if (par == null) {
 			return null;
 		} else {
 			Comparable<K> res = null;
 			Comparable<K> paritem = par.getItem();
-			Node<Comparable<K>> left = par.getLeft();
-			Node<Comparable<K>> right = par.getRight();
+			NodeAVL<K> left = par.getLeft();
+			NodeAVL<K> right = par.getRight();
 			int comp = item.compareTo(paritem);
 			if (comp == 0) {
 				return item;
@@ -152,28 +154,28 @@ public class AVL<K> {
 		}
 	}
 
-	private Node<Comparable<K>> push(Node<Comparable<K>> parent, Comparable item) {
+	private NodeAVL<K> push(NodeAVL<K> parent, K item) {
 		if (parent.getItem() == null) {
 			parent.setItem(item);
 			return parent;
 		} else {
-			Node<Comparable<K>> res;
-			Comparable<K> parentItem = parent.getItem();
-			Node<Comparable<K>> left = parent.getLeft();
-			Node<Comparable<K>> right = parent.getRight();
+			NodeAVL<K> res;
+			K parentItem = parent.getItem();
+			NodeAVL<K> left = parent.getLeft();
+			NodeAVL<K> right = parent.getRight();
 			int compare = item.compareTo(parentItem);
 			if (compare == 0) {
 				res = parent;
 			} else if (compare > 0) {
 				if (right == null) {
-					right = new Node<Comparable<K>>();
+					right = new NodeAVL<K>();
 					parent.setRight(right);
 				}
 				res = push(right, item);
 				parent.setHeight(res.getHeight() + 1);
 			} else {
 				if (left == null) {
-					left = new Node<Comparable<K>>();
+					left = new NodeAVL<K>();
 					parent.setLeft(left);
 				}
 				res = push(left, item);
@@ -183,9 +185,9 @@ public class AVL<K> {
 		}
 	}
 
-	private void ensurenaAVL(Node<Comparable<K>> node, Comparable added) {
-		Node<Comparable<K>> left = node.getLeft();
-		Node<Comparable<K>> right = node.getRight();
+	private void ensurenaAVL(NodeAVL<K> node, Comparable added) {
+		NodeAVL<K> left = node.getLeft();
+		NodeAVL<K> right = node.getRight();
 		if (Math.abs(left.getHeight() - right.getHeight()) > 1) {
 
 		}
@@ -206,64 +208,4 @@ public class AVL<K> {
 		System.out.println(avl);
 	}
 
-	private static class Node<T> {
-		T item;
-		Node left;
-		Node right;
-		int height = 0;
-
-		public Node() {
-			super();
-		}
-
-		Node(T item, Node left, Node right) {
-			this.item = item;
-			this.left = left;
-			this.right = right;
-		}
-
-		Node(T item) {
-			this.item = item;
-		}
-
-		Node(T item, Node left, Node right, int height) {
-			this.item = item;
-			this.left = left;
-			this.right = right;
-			this.height = height;
-		}
-
-		public T getItem() {
-			return item;
-		}
-
-		public void setItem(T item) {
-			this.item = item;
-		}
-
-		public Node getLeft() {
-			return left;
-		}
-
-		public void setLeft(Node left) {
-			this.left = left;
-		}
-
-		public Node getRight() {
-			return right;
-		}
-
-		public void setRight(Node right) {
-			this.right = right;
-		}
-
-		public int getHeight() {
-			return height;
-		}
-
-		public void setHeight(int height) {
-			this.height = height;
-		}
-
-	}
 }
