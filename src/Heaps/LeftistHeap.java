@@ -2,7 +2,7 @@ package Heaps;
 
 import Entity.NodeLeftist;
 
-public class LeftistHeap<T extends Comparable<T>> {
+public class LeftistHeap<T extends Comparable<T>> implements HeapInterface<T>{
 	
 	NodeLeftist<T> top;
 	
@@ -29,7 +29,7 @@ public class LeftistHeap<T extends Comparable<T>> {
 		}
 		System.out.println();
 	}
-	public void push(T t) {
+	public void insert(T t) {
 		if(t == null) {
 			return;
 		}

@@ -7,12 +7,12 @@ public class LeftistHeapTest {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Random rand = new Random(20);
-		int mb = 100;
+		int mb = 20;
 		int i = 0;
 		LeftistHeap<Integer> heaps = new LeftistHeap<>();
 		while (i < mb) {
 			int next = rand.nextInt(mb*3);
-			heaps.push(next);
+			heaps.insert(next);
 			System.out.print(next+",");
 			i++;
 		}
