@@ -23,24 +23,32 @@ public class BinaryHeapTest {
 		Arrays.sort(ints);
 		BinaryHeap heap2 = new BinaryHeap(ints);
 		verifyInvalidHeap(heap2);
-		System.out.println("heap2 printSorted");
+		
+		System.out.println("the original items are");
 		heap2.printSorted();
-//		heap1.printSorted();
-		//testDecreaseKey(heap1, 15, 199999);
-		testDelete(heap1, 15);
-		System.out.println("heap1 printSorted");
-		heap1.printSorted();
+		System.out.println("--------------------------------------------");
+		
+		testDecreaseKey(heap1, 15, 199999);
+		//testDelete(heap1, 15);
 //		long ms1 = new Date().getTime();
 //		System.out.println("performance: " + (ms1 - ms));
 	}
 	
 	private static boolean testDecreaseKey(BinaryHeap heap,int ele,int devalue) {
+		System.out.println("test DecreaseKey started, decrease [" + ele + "] with value [" + devalue + "]");
 		heap.decreaseKey(ele, devalue);
+		heap.printSorted();
+		System.out.println("test DecreaseKey end");
+		System.out.println("--------------------------------------------");
 		return verifyInvalidHeap(heap);
 	}
 	
 	private static boolean testDelete(BinaryHeap heap,int ele) {
+		System.out.println("test delete started, delete[" + ele + "]");
 		heap.delete(ele);
+		heap.printSorted();
+		System.out.println("test delete end");
+		System.out.println("--------------------------------------------");
 		return verifyInvalidHeap(heap);
 	}
 	
