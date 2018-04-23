@@ -13,6 +13,10 @@ public class LeftistHeap<T extends Comparable<T>> implements HeapInterface<T>{
 		super();
 		this.top = top;
 	}
+	
+	/**
+	 * get and delete the top item which also be the minimum item
+	 */
 	public T removeFirst() {
 		if(top == null) {
 			return null;
@@ -23,6 +27,9 @@ public class LeftistHeap<T extends Comparable<T>> implements HeapInterface<T>{
 		this.top = tmptop;
 		return result;
 	}
+	/**
+	 * get and print all the item with ascending sequence
+	 */
 	public void printSorted() {
 		System.out.println();
 		System.out.print("Sorted list are: [");
@@ -32,6 +39,9 @@ public class LeftistHeap<T extends Comparable<T>> implements HeapInterface<T>{
 		System.out.print("]");
 		System.out.println();
 	}
+	/**
+	 * insert an item to heap
+	 */
 	public void insert(T t) {
 		if(t == null) {
 			return;
@@ -45,6 +55,11 @@ public class LeftistHeap<T extends Comparable<T>> implements HeapInterface<T>{
 		addNode.setItem(t);
 		this.setTop(merge(top, addNode));
 	}
+	/**
+	 * merger a leftist heap to current this heap
+	 * @param heap
+	 * @return a merged heap which's top node is either the top of heap or current top
+	 */
 	public LeftistHeap<T> merge(LeftistHeap<T> heap) {
 		if(heap == null || heap.getTop() == null) {
 			return this;
@@ -56,6 +71,7 @@ public class LeftistHeap<T extends Comparable<T>> implements HeapInterface<T>{
 		this.setTop(result);
 		return this;
 	}
+	
 	private NodeLeftist<T> merge(NodeLeftist<T> node1,NodeLeftist<T> node2){
 		if(node1 == null && node2 == null) {
 			return null;
@@ -102,6 +118,7 @@ public class LeftistHeap<T extends Comparable<T>> implements HeapInterface<T>{
 		
 		return subNode;
 	}
+	
 	public NodeLeftist<T> getTop() {
 		return top;
 	}
