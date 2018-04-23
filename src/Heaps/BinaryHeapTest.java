@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
 
-public class HeapTest {
+public class BinaryHeapTest {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -21,14 +21,15 @@ public class HeapTest {
 		}
 		long ms = new Date().getTime();
 		Arrays.sort(ints);
-		System.out.println(Arrays.asList(ints));
 		BinaryHeap heap2 = new BinaryHeap(ints);
 		verifyInvalidHeap(heap2);
+		System.out.println("heap2 printSorted");
 		heap2.printSorted();
 //		heap1.printSorted();
-//		//testDecreaseKey(heap1, 19996, 199999);
-//		testDelete(heap1, 1);
-//		heap1.printSorted();
+		//testDecreaseKey(heap1, 15, 199999);
+		testDelete(heap1, 15);
+		System.out.println("heap1 printSorted");
+		heap1.printSorted();
 //		long ms1 = new Date().getTime();
 //		System.out.println("performance: " + (ms1 - ms));
 	}
