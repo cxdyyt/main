@@ -1,10 +1,10 @@
 package Heaps;
 
-public class Heap {
+public class BinaryHeap {
 	private Integer[] heaps; // items stored in here
 	private int lastLeft = 0; // only used this variable when build heap with given items,it point to the last left node
 	private int lastPostion = 1; // start with 1;
-	public Heap() {
+	public BinaryHeap() {
 		super();
 		// default size is 100 if start with an empty heap,it can become big as need, for example when it is full
 		this.heaps = new Integer[100];
@@ -38,7 +38,7 @@ public class Heap {
 		return result;
 	}
 	
-	public Heap(Integer[] nums) {
+	public BinaryHeap(Integer[] nums) {
 		super();
 		// make container has double size of income nums
 		this.heaps = new Integer[2 * (nums.length + 1)];

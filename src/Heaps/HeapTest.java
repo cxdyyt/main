@@ -9,7 +9,7 @@ public class HeapTest {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Random rand = new Random(20);
-		Heap heap1 = new Heap();
+		BinaryHeap heap1 = new BinaryHeap();
 		int mb = 1000;
 		Integer ints[] = new Integer[mb];
 		int i = 0;
@@ -22,7 +22,7 @@ public class HeapTest {
 		long ms = new Date().getTime();
 		Arrays.sort(ints);
 		System.out.println(Arrays.asList(ints));
-		Heap heap2 = new Heap(ints);
+		BinaryHeap heap2 = new BinaryHeap(ints);
 		verifyInvalidHeap(heap2);
 		heap2.printSorted();
 //		heap1.printSorted();
@@ -33,17 +33,17 @@ public class HeapTest {
 //		System.out.println("performance: " + (ms1 - ms));
 	}
 	
-	private static boolean testDecreaseKey(Heap heap,int ele,int devalue) {
+	private static boolean testDecreaseKey(BinaryHeap heap,int ele,int devalue) {
 		heap.decreaseKey(ele, devalue);
 		return verifyInvalidHeap(heap);
 	}
 	
-	private static boolean testDelete(Heap heap,int ele) {
+	private static boolean testDelete(BinaryHeap heap,int ele) {
 		heap.delete(ele);
 		return verifyInvalidHeap(heap);
 	}
 	
-	private static boolean verifyInvalidHeap(Heap heap) {
+	private static boolean verifyInvalidHeap(BinaryHeap heap) {
 		Integer[] heaps = heap.getHeaps();
 		for (int j = 1; j<=heaps.length/2; j++) {
 			if (heap.getHeaps()[j] == null) {
