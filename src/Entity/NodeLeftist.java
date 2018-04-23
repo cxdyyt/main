@@ -1,11 +1,10 @@
 package Entity;
 
-public class NodeLeftist<T> extends Node<T>{
+public class NodeLeftist<K extends Comparable<K>> extends Node<K,NodeLeftist<K>>{
+	
+
 	int zeroPathLength = 0;
 
-	public NodeLeftist(T item) {
-		super(item);
-	}
 	
 	public int getZeroPathLength() {
 		return zeroPathLength;

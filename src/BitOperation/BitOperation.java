@@ -27,7 +27,7 @@ public class BitOperation {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int tst = 1;
+		int tst = 2147483647;
 		List<Byte> res = BitOperation.pickUpBits(tst);
 		System.out.println(res);
 	}

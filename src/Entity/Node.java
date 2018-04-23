@@ -1,63 +1,36 @@
 package Entity;
 
 
-public class Node<T> {
-	T item;
-	Node left;
-	Node right;
+public class Node<K,T extends Node<K,T>> {
+	K item;
+	T left;
+	T right;
 	int height = 0;
-
-	public Node() {
-		super();
-	}
-
-	Node(T item, Node left, Node right) {
-		this.item = item;
-		this.left = left;
-		this.right = right;
-	}
-
-	Node(T item) {
-		this.item = item;
-	}
-
-	Node(T item, Node left, Node right, int height) {
-		this.item = item;
-		this.left = left;
-		this.right = right;
-		this.height = height;
-	}
-
-	public T getItem() {
+	public K getItem() {
 		return item;
 	}
-
-	public void setItem(T item) {
+	public void setItem(K item) {
 		this.item = item;
 	}
-
-	public Node getLeft() {
+	public T getLeft() {
 		return left;
 	}
-
-	public void setLeft(Node left) {
+	public void setLeft(T left) {
 		this.left = left;
 	}
-
-	public Node getRight() {
+	public T getRight() {
 		return right;
 	}
-
-	public void setRight(Node right) {
+	public void setRight(T right) {
 		this.right = right;
 	}
-
 	public int getHeight() {
 		return height;
 	}
-
 	public void setHeight(int height) {
 		this.height = height;
 	}
+	
+
 
 }
