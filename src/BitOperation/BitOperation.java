@@ -17,7 +17,7 @@ public class BitOperation {
 			result.add(bty);
 		}
 		for(byte i=1;i<=30;i++) {
-			mitmp *= 2;
+			mitmp <<= 1;
 			if((num & mitmp) == mitmp) {
 				result.add(i);
 			}
@@ -27,7 +27,7 @@ public class BitOperation {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int tst = 2147483647;
+		int tst = 1;
 		List<Byte> res = BitOperation.pickUpBits(tst);
 		System.out.println(res);
 	}
