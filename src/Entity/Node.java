@@ -5,7 +5,6 @@ public class Node<K,T extends Node<K,T>> {
 	K item;
 	T left;
 	T right;
-	int height = 0;
 	public K getItem() {
 		return item;
 	}
@@ -24,13 +23,5 @@ public class Node<K,T extends Node<K,T>> {
 	public void setRight(T right) {
 		this.right = right;
 	}
-	public int getHeight() {
-		return height;
-	}
-	public void setHeight(int height) {
-		this.height = height;
-	}
-	
-
 
 }
