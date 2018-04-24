@@ -11,7 +11,7 @@ public class LeftistHeapTest {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Random rand = new Random(20);
-		int mb = 2000;
+		int mb = 20000;
 		int i = 0;
 		LeftistHeap<Integer> heaps = new LeftistHeap<>();
 		System.out.print("The random input items are: [");

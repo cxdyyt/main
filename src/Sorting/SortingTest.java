@@ -27,7 +27,7 @@ public class SortingTest {
 	}
 	public static void main(String[] args) {
 		//testBubbleSort(gernerateItems());
-		//testSelectionSort(gernerateItems());
+		testSelectionSort(gernerateItems());
 		testInsertionSort(gernerateItems());
 	}
 	
