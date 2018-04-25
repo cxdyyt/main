@@ -1,15 +1,10 @@
 package Sorting;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class SortingTest {
-	private static int leng = 101;
-	public int getLeng() {
-		return leng;
-	}
-	public void setLeng(int leng) {
-		this.leng = leng;
-	}
 	public static void testBubbleSort(Integer[] arrs) {
 		BubbleSort<Integer> bubbleSort = new BubbleSort<Integer>();
 		bubbleSort.sort(arrs);
@@ -25,19 +20,42 @@ public class SortingTest {
 		InsertionSort.sort(arrs);
 		InsertionSort.printList();
 	}
-	public static void main(String[] args) {
-		//testBubbleSort(gernerateItems());
-		testSelectionSort(gernerateItems());
-		testInsertionSort(gernerateItems());
+	public static void testShellSort(Integer[] arrs) {
+		ShellSort<Integer> ShellSort = new ShellSort<Integer>();
+		ShellSort.sort(arrs);
+		ShellSort.printList();
+	}
+
+	
+	private static void testServeralSorting(List<CommonSort> sorts,boolean isPrint,int len) {
+		for(CommonSort sort : sorts) {
+			sort.sort((gernerateItems(len)));
+			if(isPrint) {
+				sort.printList();
+			}
+		}
 	}
 	
-	private static Integer[] gernerateItems() {
-		Integer[] arrs = new Integer[leng];
+	private static Integer[] gernerateItems(int len) {
+		Integer[] arrs = new Integer[len];
 		Random ran = new Random(37);
-		for(int i=0;i<leng;i++) {
-			arrs[i] = ran.nextInt(leng*3);
+		//System.out.println("original items");
+		for(int i=0;i<len;i++) {
+			int next= ran.nextInt(len*3);
+			arrs[i] = next;
+			//System.out.print(next + " ,");
 		}
+		System.out.println("------------------------------------");
 		return arrs;
 	}
 
+	
+	public static void main(String[] args) {
+		List<CommonSort> sorts = new ArrayList<CommonSort>();
+		//sorts.add(new BubbleSort<Integer>());
+		//sorts.add(new SelectionSort<Integer>());
+		//sorts.add(new InsertionSort<Integer>());
+		sorts.add(new ShellSort<Integer>());
+		testServeralSorting(sorts , false,100000);
+	}
 }
