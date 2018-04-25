@@ -13,6 +13,7 @@ public class HeapSort<T extends Comparable<T>> extends CommonSort<T> {
 
 	@Override
 	protected void sortInner(T[] arrs) {
+		System.out.println("heap sort using [" + heap.getClass().getSimpleName() + "]");
 		heap.insert(arrs);
 		int i = 0;
 		while (heap.hasMore()) {

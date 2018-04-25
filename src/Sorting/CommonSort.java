@@ -23,8 +23,6 @@ public abstract class CommonSort<T extends Comparable<T>> implements SortFunctio
 		if(arrs == null) {
 			return;
 		}
-		System.out.println(this.getClass().getSimpleName());
-		System.out.println("---------------------------------------------");
 		System.out.print("[");
 		for(T t : arrs) {
 			System.out.print(t+ ", ");

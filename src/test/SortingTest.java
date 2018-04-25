@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import Heaps.BinaryHeap;
 import Heaps.LeftistHeap;
 import InterFaces.HeapInterface;
 import InterFaces.SortFunction;
 import Sorting.BubbleSort;
-import Sorting.CommonSort;
 import Sorting.HeapSort;
 import Sorting.InsertionSort;
 import Sorting.SelectionSort;
@@ -65,10 +65,12 @@ public class SortingTest {
 		//sorts.add(new BubbleSort<Integer>());
 		//sorts.add(new SelectionSort<Integer>());
 		//sorts.add(new InsertionSort<Integer>());
-		sorts.add(new ShellSort<Integer>());
+		//sorts.add(new ShellSort<Integer>());
 		
 		HeapInterface<Integer> heap = new LeftistHeap<Integer>();
+		HeapInterface<Integer> heap1 = new BinaryHeap();
 		sorts.add(new HeapSort<Integer>(heap ));
-		testServeralSorting(sorts , true,2000);
+		sorts.add(new HeapSort<Integer>(heap1 ));
+		testServeralSorting(sorts , false,20000);
 	}
 }
