@@ -1,8 +1,18 @@
-package Sorting;
+package test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import Heaps.LeftistHeap;
+import InterFaces.HeapInterface;
+import InterFaces.SortFunction;
+import Sorting.BubbleSort;
+import Sorting.CommonSort;
+import Sorting.HeapSort;
+import Sorting.InsertionSort;
+import Sorting.SelectionSort;
+import Sorting.ShellSort;
 
 public class SortingTest {
 	public static void testBubbleSort(Integer[] arrs) {
@@ -27,8 +37,8 @@ public class SortingTest {
 	}
 
 	
-	private static void testServeralSorting(List<CommonSort> sorts,boolean isPrint,int len) {
-		for(CommonSort sort : sorts) {
+	private static void testServeralSorting(List<SortFunction<Integer>> sorts,boolean isPrint,int len) {
+		for(SortFunction sort : sorts) {
 			sort.sort((gernerateItems(len)));
 			if(isPrint) {
 				sort.printList();
@@ -51,11 +61,14 @@ public class SortingTest {
 
 	
 	public static void main(String[] args) {
-		List<CommonSort> sorts = new ArrayList<CommonSort>();
+		List<SortFunction<Integer>> sorts = new ArrayList<SortFunction<Integer>>();
 		//sorts.add(new BubbleSort<Integer>());
 		//sorts.add(new SelectionSort<Integer>());
 		//sorts.add(new InsertionSort<Integer>());
 		sorts.add(new ShellSort<Integer>());
-		testServeralSorting(sorts , false,100000);
+		
+		HeapInterface<Integer> heap = new LeftistHeap<Integer>();
+		sorts.add(new HeapSort<Integer>(heap ));
+		testServeralSorting(sorts , true,2000);
 	}
 }

@@ -2,6 +2,8 @@ package Sorting;
 
 import java.util.Date;
 
+import InterFaces.SortFunction;
+
 public abstract class CommonSort<T extends Comparable<T>> implements SortFunction<T> {
 
 	T[] arrs;

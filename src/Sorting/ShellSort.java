@@ -4,10 +4,9 @@ public class ShellSort<T extends Comparable<T>> extends CommonSort<T> {
 
 	@Override
 	public void sortInner(T[] arrs) {
-		int[] hams = new int[] {5,3,1};
 		int len = arrs.length;
-		for(int i=0;i<hams.length;i++) {
-			int ham = hams[i];
+		int ham=len/2;
+		while(ham > 0) {
 			for(int j=ham;j<len;j++) {
 				T curr = arrs[j];
 				for(int k=j;k>=0;k=k-ham) {
@@ -26,6 +25,7 @@ public class ShellSort<T extends Comparable<T>> extends CommonSort<T> {
 					}
 				}
 			}
+			ham /= 2;
 		}
 	}
 

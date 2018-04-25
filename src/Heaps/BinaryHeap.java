@@ -1,50 +1,55 @@
 package Heaps;
 
-public class BinaryHeap {
+import InterFaces.HeapInterface;
+
+public class BinaryHeap implements HeapInterface<Integer> {
 	private Integer[] heaps; // items stored in here
-	private int lastLeft = 0; // only used this variable when build heap with given items,it point to the last left node
+	private int lastLeft = 0; // only used this variable when build heap with given items,it point to the last
+								// left node
 	private int lastPostion = 1; // start with 1;
+
 	public BinaryHeap() {
 		super();
-		// default size is 100 if start with an empty heap,it can become big as need, for example when it is full
+		// default size is 100 if start with an empty heap,it can become big as need,
+		// for example when it is full
 		this.heaps = new Integer[100];
 	}
 
 	public void delete(int ele) {
 		int minValue = heaps[1];
-		int num = decreaseKey(ele, Math.abs(ele-minValue)+1);
-		while(num-- > 0) {
+		int num = decreaseKey(ele, Math.abs(ele - minValue) + 1);
+		while (num-- > 0) {
 			removeFirst();
 		}
 	}
-	
-	public int decreaseKey(int ele,int devalue) {
-		int result=0;
-		for(int i=1;i<=lastPostion;i++) {
+
+	public int decreaseKey(int ele, int devalue) {
+		int result = 0;
+		for (int i = 1; i <= lastPostion; i++) {
 			int num = heaps[i];
-			if(num == ele) {
+			if (num == ele) {
 				result++;
 				int targetPostion = i;
-				int parent = targetPostion/2;
-				int currentValue = num-devalue;
-				while(parent != 0 && currentValue < heaps[parent]) {
+				int parent = targetPostion / 2;
+				int currentValue = num - devalue;
+				while (parent != 0 && currentValue < heaps[parent]) {
 					heaps[targetPostion] = heaps[parent];
 					targetPostion = parent;
-					parent = targetPostion/2;
+					parent = targetPostion / 2;
 				}
 				heaps[targetPostion] = currentValue;
 			}
 		}
 		return result;
 	}
-	
+
 	public BinaryHeap(Integer[] nums) {
 		super();
 		// make container has double size of income nums
 		this.heaps = new Integer[2 * (nums.length + 1)];
-		int j =0;
-		for(int i=0;i<nums.length;i++) {
-			if(nums[i] != null) {
+		int j = 0;
+		for (int i = 0; i < nums.length; i++) {
+			if (nums[i] != null) {
 				heaps[++j] = nums[i];
 			}
 		}
@@ -57,17 +62,18 @@ public class BinaryHeap {
 		buildHeap(1);
 	}
 
-	public void insert(int ele) {
+	@Override
+	public void insert(Integer ele) {
 		// if nothing in array
-		if(lastPostion == 1 && heaps[lastPostion] == null) {
+		if (lastPostion == 1 && heaps[lastPostion] == null) {
 			heaps[lastPostion] = ele;
 			return;
 		}
 		lastPostion++;
-		
+
 		// resize array if array is two small
-		if(lastPostion > heaps.length -1) {
-			Integer[] tmp = new Integer[2*heaps.length];
+		if (lastPostion > heaps.length - 1) {
+			Integer[] tmp = new Integer[2 * heaps.length];
 			System.arraycopy(heaps, 0, tmp, 0, heaps.length);
 			heaps = tmp;
 		}
@@ -85,37 +91,39 @@ public class BinaryHeap {
 		// backup the container, and after print restore it
 		Integer[] tmp = new Integer[heaps.length];
 		int tmplastPostion = lastPostion;
-		System.arraycopy(heaps, 0, tmp, 0, heaps.length);;
+		System.arraycopy(heaps, 0, tmp, 0, heaps.length);
+		;
 		System.out.print("[");
-		while(this.lastPostion >0) {
-			System.out.print(this.removeFirst()+ ", ");
+		while (this.lastPostion > 0) {
+			System.out.print(this.removeFirst() + ", ");
 		}
 		lastPostion = tmplastPostion;
 		heaps = tmp;
 		System.out.println();
 	}
-	public int removeFirst() {
+
+	public Integer removeFirst() {
 		int targetPostion = 1;
 		int testleftPosition = 0;
 		int lastValue = heaps[lastPostion];
 		int result = heaps[1];
-		while (targetPostion <= lastPostion/2) {
+		while (targetPostion <= lastPostion / 2) {
 			int upValue = 0;
 			int upFrom = 0;
 			testleftPosition = 2 * targetPostion;
-			if(testleftPosition == lastPostion || (heaps[testleftPosition] <= heaps[testleftPosition +1])) {
+			if (testleftPosition == lastPostion || (heaps[testleftPosition] <= heaps[testleftPosition + 1])) {
 				upFrom = testleftPosition;
 				upValue = heaps[testleftPosition];
-			}else {
+			} else {
 				upFrom = testleftPosition + 1;
-				upValue = heaps[testleftPosition+1];
+				upValue = heaps[testleftPosition + 1];
 			}
-			if(lastValue <= upValue) {
+			if (lastValue <= upValue) {
 				heaps[targetPostion] = lastValue;
 				break;
-			}else {
+			} else {
 				heaps[targetPostion] = upValue;
-				if(upFrom > lastPostion /2) {
+				if (upFrom > lastPostion / 2) {
 					heaps[upFrom] = lastValue;
 					break;
 				}
@@ -192,6 +200,19 @@ public class BinaryHeap {
 
 	public void setLastPostion(int lastPostion) {
 		this.lastPostion = lastPostion;
+	}
+
+	@Override
+	public void insert(Integer[] eles) {
+		for (Integer ele : eles) {
+			insert(ele);
+		}
+	}
+
+	@Override
+	public boolean hasMore() {
+		// TODO Auto-generated method stub
+		return (lastPostion > 0);
 	}
 
 }

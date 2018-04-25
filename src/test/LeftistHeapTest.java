@@ -1,10 +1,11 @@
-package Heaps;
+package test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import Entity.NodeLeftist;
+import Heaps.LeftistHeap;
 
 public class LeftistHeapTest {
 

@@ -1,8 +1,10 @@
-package Heaps;
+package test;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
+
+import Heaps.BinaryHeap;
 
 public class BinaryHeapTest {
 

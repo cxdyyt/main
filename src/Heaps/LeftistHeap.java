@@ -1,6 +1,7 @@
 package Heaps;
 
 import Entity.NodeLeftist;
+import InterFaces.HeapInterface;
 
 public class LeftistHeap<T extends Comparable<T>> implements HeapInterface<T>{
 	
@@ -118,6 +119,17 @@ public class LeftistHeap<T extends Comparable<T>> implements HeapInterface<T>{
 	}
 	public void setTop(NodeLeftist<T> top) {
 		this.top = top;
+	}
+	@Override
+	public void insert(T[] eles) {
+		for(T ele : eles) {
+			insert(ele);
+		}
+	}
+	@Override
+	public boolean hasMore() {
+		// TODO Auto-generated method stub
+		return top != null;
 	}
 	
 }

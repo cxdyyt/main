@@ -1,9 +1,11 @@
-package Trees;
+package test;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
+import Trees.AVL;
 
 public class AVLTest {
 
@@ -13,10 +15,11 @@ public class AVLTest {
 		Random rang = new Random(47);
 		List<Integer> list = new ArrayList<Integer>();
 		AVL<Integer> avl = new AVL<Integer>();
+		int ham = 100;
 		int i =0;
-		while(i<9) {
+		while(i<ham) {
 			i++;
-			int tmp = rang.nextInt(100);
+			int tmp = rang.nextInt(ham*3);
 			list.add(tmp);
 			avl.push(tmp);
 		}

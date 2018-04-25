@@ -15,5 +15,8 @@ public class BubbleSort<T extends Comparable<T>> extends CommonSort<T> {
 			}
 		}
 	}
+	
+	public static void main(String args[]) {
+	}
 
 }
