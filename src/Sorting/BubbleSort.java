@@ -1,5 +1,10 @@
 package Sorting;
-
+/**
+ * @see SortFunction
+ * @author Beck
+ * @see BubbleSort,CommonSort
+ * @param <T>
+ */
 public class BubbleSort<T extends Comparable<T>> extends CommonSort<T> {
 
 	@Override

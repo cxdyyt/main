@@ -9,6 +9,7 @@ import Heaps.LeftistHeap;
 import InterFaces.HeapInterface;
 import InterFaces.SortFunction;
 import Sorting.BubbleSort;
+import Sorting.BucketSort;
 import Sorting.HeapSort;
 import Sorting.InsertionSort;
 import Sorting.SelectionSort;
@@ -64,13 +65,14 @@ public class SortingTest {
 		List<SortFunction<Integer>> sorts = new ArrayList<SortFunction<Integer>>();
 		//sorts.add(new BubbleSort<Integer>());
 		//sorts.add(new SelectionSort<Integer>());
-		//sorts.add(new InsertionSort<Integer>());
+		sorts.add(new InsertionSort<Integer>());
 		//sorts.add(new ShellSort<Integer>());
-		
+		byte byt = 0;
 		HeapInterface<Integer> heap = new LeftistHeap<Integer>();
 		HeapInterface<Integer> heap1 = new BinaryHeap();
-		sorts.add(new HeapSort<Integer>(heap ));
-		sorts.add(new HeapSort<Integer>(heap1 ));
-		testServeralSorting(sorts , false,20000);
+		//sorts.add(new HeapSort<Integer>(heap ));
+		//sorts.add(new HeapSort<Integer>(heap1 ));
+		sorts.add(new BucketSort(200*3));
+		testServeralSorting(sorts , true,200);
 	}
 }

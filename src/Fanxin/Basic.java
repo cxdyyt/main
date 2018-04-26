@@ -1,6 +1,8 @@
 package Fanxin;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Basic {
 	private String value;
@@ -16,6 +18,8 @@ public class Basic {
 		Basic basic = new Basic();
 		TimeerStamp t1 = new TimeerStamp(basic );
 		System.out.println(t1.getStamp());
+		List<Decorator> dec = new ArrayList<Decorator>();
+		List<? super Decorator> ddd = dec;
 	}
 }
 class Decorator extends Basic {
