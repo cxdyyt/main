@@ -1,8 +1,5 @@
 package Sorting;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-
 import InterFaces.SortFunction;
 
 /**
@@ -12,67 +9,63 @@ import InterFaces.SortFunction;
  * @param <T>
  */
 public class MergeSort<T extends Comparable<T>> extends CommonSort<T> {
-
+	T[] globalTmp = null;
 	@Override
 	public void sortInner(T[] arrs) {
 		int len = arrs.length;
-		T[] tmpres = megeSort(arrs, 0, len - 1);
-		System.arraycopy(tmpres, 0, arrs, 0, len);
+		globalTmp = (T[]) new Comparable[len];
+		megeSort(arrs, 0, len - 1);
 	}
 
-	private T[] megeSort(T[] arrs,int start,int end) {
-		T[] result = (T[]) new Comparable[end-start+1];
+	private void megeSort(T[] arrs,int start,int end) {
 		// only one item
-		if(end - start  == 0) {
-			result[0] = arrs[start];
+		if(end == start) {
+			globalTmp[start] = arrs[start];
 		}else if(end - start == 1){
 			// two items
 			int comp = arrs[end].compareTo(arrs[start]);
-			if(comp > 0) {
-				result[0] = arrs[start];
-				result[1] = arrs[end];
+			if(comp < 0) {
+				globalTmp[start] = arrs[end];
+				globalTmp[end] = arrs[start];
 			}else {
-				result[0] = arrs[end];
-				result[1] = arrs[start];
+				globalTmp[start] = arrs[start];
+				globalTmp[end] = arrs[end];
 			}
 		}else {
 			// more than two items
 			int midd = (start+end)/2;
-			T[] rearr = null;
-			T[] leftres = megeSort(arrs,start,midd);
-			T[] rightres = megeSort(arrs,midd+1,end);
-			int pl = midd-start;
-			int pr = end-midd-1;
-			int i=0,j=0,m=0;
+			megeSort(arrs,start,midd);
+			megeSort(arrs,midd+1,end);
+			int pl = midd;
+			int pr = end;
+			int i=start,j=midd+1,m=start;
 			while(i<=pl || j<=pr) {
-				T litem = i > pl ? null : leftres[i];
-				T ritem = j > pr ? null : rightres[j];
+				T litem = i > pl ? null : arrs[i];
+				T ritem = j > pr ? null : arrs[j];
 				if(litem == null) {
 					if(ritem != null) {
 						// litem is null and ritem is not null
-						result[m++] = ritem;
+						globalTmp[m++] = ritem;
 						j++;
 					}
 				}else {
 					if(ritem == null) {
 						// ritem is null and litem is not null
-						result[m++] = litem;
+						globalTmp[m++] = litem;
 						i++;
 					}else {
 						// ritem is not null and litem is not null
 						if(litem.compareTo(ritem) > 0) {
-							rearr = leftres;
-							result[m++] = ritem;
+							globalTmp[m++] = ritem;
 							j++;
 						}else {
-							result[m++] = litem;
-							rearr = rightres;
+							globalTmp[m++] = litem;
 							i++;
 						}
 					}
 				}
 			}
 		}
-		return result;
+		System.arraycopy(globalTmp,start,arrs,start,end - start + 1);
 	}
 }
