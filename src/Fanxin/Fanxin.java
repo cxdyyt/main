@@ -1,11 +1,15 @@
 package Fanxin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Fanxin {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Child ch = new Child();
-		ch.Sys(ch);
+		List<? super Child> pasre = new ArrayList<Child>();
+		pasre.add(new Child());
 	}
 
 }

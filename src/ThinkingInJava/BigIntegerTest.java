@@ -1,4 +1,4 @@
-package JavaFeatures;
+package ThinkingInJava;
 
 import java.math.BigInteger;
 
