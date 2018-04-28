@@ -1,12 +1,13 @@
 package ExtendTest;
 
 public class Parent {
-	Object obj = new Integer(2);
+	int obj = 1;
 	Parent() {
 		
 	}
-	final void f() {
-		
+	
+	void f() {
+		System.out.println("parent f()"+ obj);
 	}
 	void method(int a) {
 		
