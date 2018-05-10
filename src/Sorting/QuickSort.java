@@ -10,11 +10,9 @@ import InterFaces.SortFunction;
  */
 public class QuickSort<T extends Comparable<T>> extends CommonSort<T> {
 	T[] globalTmp = null;
-	int min = 5;
 	@Override
 	public void sortInner(T[] arrs) {
 		subSort(arrs, 0, arrs.length-1);
-		subSortWithMin(arrs, 0, arrs.length-1);
 	}
 	private void subSort(T[] arrs,int start,int end) {
 		T flag = null;
@@ -52,35 +50,7 @@ public class QuickSort<T extends Comparable<T>> extends CommonSort<T> {
 		subSort(arrs, i+1, end);
 	}
 
-	private void subSortWithMin(T[] arrs,int start,int end) {
-		if(start + min > end) {
-			InsertionSort inst = new InsertionSort<T>();
-			inst.sortInner(arrs, start, end);
-			return;
-		}
-		T flag = threeMiddle(arrs, start, end);
-		int i = start + 1;
-		int j = end - 2;
-		while(i <= j) {
-			T ti = arrs[i];
-			T tj = arrs[j];
-			if(ti.compareTo(flag) < 0) {
-				i++;
-			}
-			if(tj.compareTo(flag) > 0) {
-				j--;
-			}
-			if(ti.compareTo(flag) >= 0 && tj.compareTo(flag) <=0) {
-				swap(arrs, i, j);
-				i++;
-				j--;
-			}
-		}
-		swap(arrs, i, end - 1);
-		subSort(arrs, start, i-1);
-		subSort(arrs, i+1, end);
-	}
-	private void swap(T[] arrs,int i,int j) {
+	protected void swap(T[] arrs,int i,int j) {
 		if(i == j) {
 			return;
 		}
@@ -88,7 +58,7 @@ public class QuickSort<T extends Comparable<T>> extends CommonSort<T> {
 		arrs[i] = arrs[j];
 		arrs[j] = tmp;
 	}
-	private T threeMiddle(T[] arrs,int start,int end) {
+	protected T threeMiddle(T[] arrs,int start,int end) {
 		int middle = (start+end)/2;
 		if(arrs[start].compareTo(arrs[middle]) > 0) {
 			swap(arrs, start, middle);
@@ -102,4 +72,5 @@ public class QuickSort<T extends Comparable<T>> extends CommonSort<T> {
 		swap(arrs, middle, end-1);
 		return arrs[end-1];
 	}
+
 }

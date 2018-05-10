@@ -21,7 +21,6 @@ public class EnumTest {
 		Color red1 = Enum.valueOf(Color.class, "RED");
 		StringUtils.println(red1);
 		red.valueOf("BLACK");
-		red.printList();
 		System.out.println("enumCons " + Arrays.toString(Color.class.getEnumConstants()));
 		EnumSet es = EnumSet.of(red) ;
 		es.add(Color.BLUE);
@@ -60,7 +59,7 @@ interface Food {
 		HH
 	}
 }
-enum Color implements SortFunction<Integer>{
+enum Color{
 	RED("red") {
 		@Override
 		void print() {
@@ -96,15 +95,6 @@ enum Color implements SortFunction<Integer>{
 		this.des = des;
 	}
 	abstract void print();
-	@Override
-	public void sort(Integer[] arrs) {
-		// TODO Auto-generated method stub
-		return;
-	}
-	@Override
-	public void printList() {
-		System.out.println(Arrays.toString(values()));
-	}
 	
 	
 }
