@@ -14,6 +14,7 @@ public class QuickSort<T extends Comparable<T>> extends CommonSort<T> {
 	@Override
 	public void sortInner(T[] arrs) {
 		subSort(arrs, 0, arrs.length-1);
+		subSortWithMin(arrs, 0, arrs.length-1);
 	}
 	private void subSort(T[] arrs,int start,int end) {
 		T flag = null;
@@ -29,6 +30,35 @@ public class QuickSort<T extends Comparable<T>> extends CommonSort<T> {
 			return;
 		}
 		flag = threeMiddle(arrs, start, end);
+		int i = start + 1;
+		int j = end - 2;
+		while(i <= j) {
+			T ti = arrs[i];
+			T tj = arrs[j];
+			if(ti.compareTo(flag) < 0) {
+				i++;
+			}
+			if(tj.compareTo(flag) > 0) {
+				j--;
+			}
+			if(ti.compareTo(flag) >= 0 && tj.compareTo(flag) <=0) {
+				swap(arrs, i, j);
+				i++;
+				j--;
+			}
+		}
+		swap(arrs, i, end - 1);
+		subSort(arrs, start, i-1);
+		subSort(arrs, i+1, end);
+	}
+
+	private void subSortWithMin(T[] arrs,int start,int end) {
+		if(start + min > end) {
+			InsertionSort inst = new InsertionSort<T>();
+			inst.sortInner(arrs, start, end);
+			return;
+		}
+		T flag = threeMiddle(arrs, start, end);
 		int i = start + 1;
 		int j = end - 2;
 		while(i <= j) {

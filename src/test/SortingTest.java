@@ -55,6 +55,6 @@ public class SortingTest {
 		//sorts.add(new HeapSort<Integer>(heap1 ));
 		//sorts.add(new BucketSort(200*3));
 		sorts.add(new QuickSort<Integer>());
-		testServeralSorting(sorts , true,100);
+		testServeralSorting(sorts , false,100000);
 	}
 }
