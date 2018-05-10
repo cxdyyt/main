@@ -13,32 +13,11 @@ import Sorting.BucketSort;
 import Sorting.HeapSort;
 import Sorting.InsertionSort;
 import Sorting.MergeSort;
+import Sorting.QuickSort;
 import Sorting.SelectionSort;
 import Sorting.ShellSort;
 
 public class SortingTest {
-	public static void testBubbleSort(Integer[] arrs) {
-		BubbleSort<Integer> bubbleSort = new BubbleSort<Integer>();
-		bubbleSort.sort(arrs);
-		bubbleSort.printList();
-	}
-	public static void testSelectionSort(Integer[] arrs) {
-		SelectionSort<Integer> selectionSort = new SelectionSort<Integer>();
-		selectionSort.sort(arrs);
-		selectionSort.printList();
-	}
-	public static void testInsertionSort(Integer[] arrs) {
-		InsertionSort<Integer> InsertionSort = new InsertionSort<Integer>();
-		InsertionSort.sort(arrs);
-		InsertionSort.printList();
-	}
-	public static void testShellSort(Integer[] arrs) {
-		ShellSort<Integer> ShellSort = new ShellSort<Integer>();
-		ShellSort.sort(arrs);
-		ShellSort.printList();
-	}
-
-	
 	private static void testServeralSorting(List<SortFunction<Integer>> sorts,boolean isPrint,int len) {
 		for(SortFunction sort : sorts) {
 			sort.sort((gernerateItems(len)));
@@ -66,15 +45,16 @@ public class SortingTest {
 		List<SortFunction<Integer>> sorts = new ArrayList<SortFunction<Integer>>();
 		//sorts.add(new BubbleSort<Integer>());
 		//sorts.add(new SelectionSort<Integer>());
-		sorts.add(new InsertionSort<Integer>());
+		//sorts.add(new InsertionSort<Integer>());
 		//sorts.add(new ShellSort<Integer>());
 		byte byt = 0;
 		HeapInterface<Integer> heap = new LeftistHeap<Integer>();
 		HeapInterface<Integer> heap1 = new BinaryHeap();
-		sorts.add(new HeapSort<Integer>(heap ));
+		//sorts.add(new HeapSort<Integer>(heap ));
 		sorts.add(new MergeSort<Integer>());
 		//sorts.add(new HeapSort<Integer>(heap1 ));
 		//sorts.add(new BucketSort(200*3));
-		testServeralSorting(sorts , false,30000);
+		sorts.add(new QuickSort<Integer>());
+		testServeralSorting(sorts , true,100);
 	}
 }
