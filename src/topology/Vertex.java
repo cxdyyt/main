@@ -1,15 +1,25 @@
 package topology;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Vertex<T> {
-	int rudu = 0;
-	T detailedContent = null;
-	List<Vertex> adjacents;
+	private int index = 0;
+	private int rudu = 0;
+	private int fianlRudu;
+	private T detailedContent = null;
+	private List<Vertex> adjacents = new ArrayList<Vertex>();
 	
-	Map<Vertex, Weight> weightMap = new HashMap<Vertex, Weight>();
+	public void resetVertex() {
+		rudu = fianlRudu;
+	}
+
+	public void backupVertex() {
+		fianlRudu = rudu;
+	}
+	private Map<Vertex, Weight> weightMap = new HashMap<Vertex, Weight>();
 
 	public T getDetailedContent() {
 		return detailedContent;
@@ -39,8 +49,8 @@ public class Vertex<T> {
 		return rudu;
 	}
 
-	public void setRudu(int rudu) {
-		this.rudu = rudu;
+	public void setFianlRudu(int rudu) {
+		this.fianlRudu = rudu;
 	}
 	public void increaseRudu() {
 		rudu++;
@@ -48,4 +58,17 @@ public class Vertex<T> {
 	public void decreaseRudu() {
 		rudu--;
 	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
+	public int getFianlRudu() {
+		return fianlRudu;
+	}
+
 }
