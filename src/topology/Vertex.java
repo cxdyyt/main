@@ -114,13 +114,14 @@ public class Vertex<T> {
 	}
 
 	public void printPath() {
-		if (preVertex != null) {
+		if (preVertex == null) {
+			if (!startVertex) {
+				System.out.println("this is no way from start vetext to here");
+			}
+		}else {
 			preVertex.printPath();
-		} else if (!startVertex) {
-			System.out.println("this is no way from start vetext to here");
-		} else {
-			System.out.print(this.index + " >> ");
 		}
+		System.out.print(this.index + " >> ");
 	}
 
 }

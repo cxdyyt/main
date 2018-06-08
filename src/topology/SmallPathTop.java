@@ -62,13 +62,13 @@ public class SmallPathTop {
 	
 	private void setVetexKnown(Weight currentWei,Vertex vert) {
 		vert.setKnown(true);
-		//Weight nextWeight = currentWei.getNextBigWeight();
-		vert.setInWeight(currentWei);
+		Weight newWeight = currentWei.cloneWeight();
+		vert.setInWeight(newWeight);
 	}
 	
 	private void pushAdjacents(LinkedList<Vertex> pushAdjacents,Weight currentWei,Vertex vertex) {
 		List<Vertex> vetexs = vertex.getAdjacents();
-		currentWei.setDistance(vertex.getInWeight().getDistance()+1);
+		currentWei.setWeightValue(vertex.getInWeight().getWeightValue()+1);
 		for(Vertex vert : vetexs) {
 			if(vert.isKnown() && vert.getInWeight().compareTo(currentWei) <= 0) {
 				continue;
@@ -130,11 +130,12 @@ public class SmallPathTop {
 
 	public static void main(String[] args) throws Exception {
 		SmallPathTop te = new SmallPathTop();
-		te.setTopVertex(te.getVertexs()[8] );
+		te.setTopVertex(te.getVertexs()[0] );
 		te.generateSmallPathToOther();
 		for(Vertex ve : te.getVertexs()) {
 			System.out.println("path from [" + te.getTopVertex().getIndex() + "] to [" + ve.getIndex() + "]");
 			ve.printPath();
+			System.out.print("weight value is :"+ve.getInWeight().getWeightValue());
 			System.out.println("---------------");
 		}
 		System.out.println("");

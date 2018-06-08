@@ -55,20 +55,11 @@ public class DistancWeight<T extends DistancWeight<T>> implements Weight<T> {
 	}
 
 	@Override
-	public Weight getNextBigWeight() {
-		DistancWeight weight = new DistancWeight(++distance, description);
+	public Weight cloneWeight() {
+		DistancWeight weight = new DistancWeight(distance, description);
 		return weight;
 	}
 
-	@Override
-	public int getDistance() {
-		return distance;
-	}
-
-	@Override
-	public void setDistance(int distance) {
-		this.distance = distance;
-	}
 
 	@Override
 	public int compareTo(T o) {
@@ -76,12 +67,15 @@ public class DistancWeight<T extends DistancWeight<T>> implements Weight<T> {
 		if(this == o) {
 			return 0;
 		}
-		if(this.distance > o.getDistance()) {
+		if(this.getWeightValue() > o.getWeightValue()) {
 			return 1;
 		}
 		return -1;
 	}
-	
-	
+
+	@Override
+	public void setWeightValue(int weightValue) {
+		this.distance = weightValue;
+	}
 
 }
