@@ -1,21 +1,25 @@
 package topology;
 
-import java.util.List;
-
 public class VerTexWays {
-	List<Vertex> ways;
+	int parentIndex = -1;
 	Weight totalWeight;
-	public List<Vertex> getWays() {
-		return ways;
-	}
-	public void setWays(List<Vertex> ways) {
-		this.ways = ways;
+	
+	public VerTexWays(int parentIndex, Weight totalWeight) {
+		super();
+		this.parentIndex = parentIndex;
+		this.totalWeight = totalWeight;
 	}
 	public Weight getTotalWeight() {
 		return totalWeight;
 	}
 	public void setTotalWeight(Weight totalWeight) {
 		this.totalWeight = totalWeight;
+	}
+	public int getParentIndex() {
+		return parentIndex;
+	}
+	public void setParentIndex(int parentIndex) {
+		this.parentIndex = parentIndex;
 	}
 	
 }

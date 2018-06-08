@@ -10,6 +10,7 @@ public class GenerateTopology {
 		for(int i=0; i<verLen;i++) {
 			Vertex vert = new Vertex();
 			vert.setDetailedContent(detailedCons[i]);
+			vert.setId(i);
 			vertexs[i] = vert;
 		}
 	}

@@ -6,12 +6,17 @@ import java.util.List;
 import java.util.Map;
 
 public class Vertex<T> {
+	boolean startVertex;
+	private int id;
 	private int index = 0;
 	private int rudu = 0;
 	private int fianlRudu;
 	private T detailedContent = null;
 	private List<Vertex> adjacents = new ArrayList<Vertex>();
-	
+	private boolean known = false;
+	private Weight inWeight;
+	Vertex preVertex = null;
+
 	public void resetVertex() {
 		rudu = fianlRudu;
 	}
@@ -19,10 +24,17 @@ public class Vertex<T> {
 	public void backupVertex() {
 		fianlRudu = rudu;
 	}
-	private Map<Vertex, Weight> weightMap = new HashMap<Vertex, Weight>();
 
 	public T getDetailedContent() {
 		return detailedContent;
+	}
+
+	public Vertex getPreVertex() {
+		return preVertex;
+	}
+
+	public void setPreVertex(Vertex preVertex) {
+		this.preVertex = preVertex;
 	}
 
 	public void setDetailedContent(T detailedContent) {
@@ -37,12 +49,24 @@ public class Vertex<T> {
 		this.adjacents = adjacents;
 	}
 
-	public Map<Vertex, Weight> getWeightMap() {
-		return weightMap;
+	public boolean isKnown() {
+		return known;
 	}
 
-	public void setWeightMap(Map<Vertex, Weight> weightMap) {
-		this.weightMap = weightMap;
+	public void setKnown(boolean known) {
+		this.known = known;
+	}
+
+	public Weight getInWeight() {
+		return inWeight;
+	}
+
+	public void setInWeight(Weight inWeight) {
+		this.inWeight = inWeight;
+	}
+
+	public void setRudu(int rudu) {
+		this.rudu = rudu;
 	}
 
 	public int getRudu() {
@@ -52,9 +76,11 @@ public class Vertex<T> {
 	public void setFianlRudu(int rudu) {
 		this.fianlRudu = rudu;
 	}
+
 	public void increaseRudu() {
 		rudu++;
 	}
+
 	public void decreaseRudu() {
 		rudu--;
 	}
@@ -69,6 +95,32 @@ public class Vertex<T> {
 
 	public int getFianlRudu() {
 		return fianlRudu;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public boolean isStartVertex() {
+		return startVertex;
+	}
+
+	public void setStartVertex(boolean startVertex) {
+		this.startVertex = startVertex;
+	}
+
+	public void printPath() {
+		if (preVertex != null) {
+			preVertex.printPath();
+		} else if (!startVertex) {
+			System.out.println("this is no way from start vetext to here");
+		} else {
+			System.out.print(this.index + " >> ");
+		}
 	}
 
 }
