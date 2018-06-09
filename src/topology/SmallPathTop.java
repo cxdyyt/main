@@ -17,9 +17,9 @@ public class SmallPathTop {
 		GenerateTopology.generate(vertexs, detalCon, weight);
 
 		addAdjacents(vertexs[0], new int[][] { {1,3}, {2,5} });
-		addAdjacents(vertexs[1], new int[][] { {3,7}, {4,6},{8,21} });
+		addAdjacents(vertexs[1], new int[][] { {0,7},{3,7}, {4,6},{8,1} });
 		addAdjacents(vertexs[2], new int[][] { {3,12}, {7,2} ,{0,1}});
-		addAdjacents(vertexs[3], new int[][] { {6,15} });
+		addAdjacents(vertexs[3], new int[][] { {2,12},{6,15} });
 		addAdjacents(vertexs[4], new int[][] { {5,10},{1,11} });
 		addAdjacents(vertexs[5], new int[][] { {8,13} });
 		addAdjacents(vertexs[6], new int[][] { {7,9}, {8,8} });
@@ -38,21 +38,12 @@ public class SmallPathTop {
 	public void generateSmallPathToOther(Vertex<DistancWeight> topVertex) {
 		if (topVertex != null) {
 
-			// Weight currentWei = new DistancWeight(0);
-
 			LinkedList<Vertex<DistancWeight>> exitVer = new LinkedList<Vertex<DistancWeight>>();
-			topVertex.setRudu(0);
-			topVertex.setKnown(true);
-			// trySetVetexKnown(topVertex);
 			pushAdjacents(exitVer, topVertex);
 
 			while (!exitVer.isEmpty()) {
 				Vertex<DistancWeight> vert = exitVer.poll();
-				if (vert.getRudu() == 0) {
-					vert.setKnown(true);
-				}
 				pushAdjacents(exitVer, vert);
-				// }
 			}
 		}
 	}
@@ -61,16 +52,13 @@ public class SmallPathTop {
 	private void pushAdjacents(LinkedList<Vertex<DistancWeight>> pushAdjacents, Vertex<DistancWeight> vertex) {
 		List<Vertex<DistancWeight>> vetexs = vertex.getAdjacents();
 		for (Vertex<DistancWeight> vert : vetexs) {
-			if (vert.isKnown()) {
+			if (vert == topVertex) {
 				continue;
 			}
 
 			DistancWeight nextWei = vertex.getNextWeight(vert);
 			Vertex<DistancWeight> currentPreVer = vert.getPreVertex();
 			if (currentPreVer == null || vert.getInWeight().compareTo(nextWei) > 0) {
-				if(vertex.isKnown()) {
-					vert.decreaseRudu();
-				}
 				vert.setInWeight(nextWei);
 				vert.setPreVertex(vertex);
 				pushAdjacents.add(vert);
@@ -128,7 +116,7 @@ public class SmallPathTop {
 
 	public static void main(String[] args) throws Exception {
 		SmallPathTop te = new SmallPathTop();
-		te.setTopVertex(te.getVertexs()[0]);
+		te.setTopVertex(te.getVertexs()[8]);
 		te.generateSmallPathToOther();
 		for (Vertex<DistancWeight> ve : te.getVertexs()) {
 			System.out.println("path from [" + te.getTopVertex().getIndex() + "] to [" + ve.getIndex() + "]");
