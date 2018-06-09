@@ -124,4 +124,8 @@ public class Vertex<T> {
 		System.out.print(this.index + " >> ");
 	}
 
+	public Weight getNextWeight(Vertex vert) {
+		return inWeight.cloneWeightNextBig();
+	}
+
 }

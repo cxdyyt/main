@@ -80,7 +80,7 @@ public class DistancWeight<T extends DistancWeight<T>> implements Weight<T> {
 
 	@Override
 	public Weight cloneWeightNextBig() {
-		return new DistancWeight<T>(++distance);
+		return new DistancWeight<T>(distance+1);
 	}
 
 }
