@@ -78,4 +78,9 @@ public class DistancWeight<T extends DistancWeight<T>> implements Weight<T> {
 		this.distance = weightValue;
 	}
 
+	@Override
+	public Weight cloneWeightNextBig() {
+		return new DistancWeight<T>(++distance);
+	}
+
 }

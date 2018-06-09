@@ -5,4 +5,5 @@ public interface Weight<T> extends Comparable<T>{
 	void setWeightValue(int weightValue);
 	String getDescription();
 	Weight cloneWeight();
+	Weight cloneWeightNextBig();
 }

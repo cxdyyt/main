@@ -68,12 +68,12 @@ public class SmallPathTop {
 	
 	private void pushAdjacents(LinkedList<Vertex> pushAdjacents,Weight currentWei,Vertex vertex) {
 		List<Vertex> vetexs = vertex.getAdjacents();
-		currentWei.setWeightValue(vertex.getInWeight().getWeightValue()+1);
+		Weight nextWei = currentWei.cloneWeightNextBig();
 		for(Vertex vert : vetexs) {
 			if(vert.isKnown() && vert.getInWeight().compareTo(currentWei) <= 0) {
 				continue;
 			}
-			vert.setInWeight(currentWei);
+			vert.setInWeight(nextWei);
 			vert.setPreVertex(vertex);
 			pushAdjacents.add(vert);
 		}
@@ -135,9 +135,10 @@ public class SmallPathTop {
 		for(Vertex ve : te.getVertexs()) {
 			System.out.println("path from [" + te.getTopVertex().getIndex() + "] to [" + ve.getIndex() + "]");
 			ve.printPath();
-			System.out.print("weight value is :"+ve.getInWeight().getWeightValue());
+			//System.out.print("weight value is :"+ve.getInWeight().getWeightValue());
 			System.out.println("---------------");
 		}
+		te.vertexs[5].printPath();
 		System.out.println("");
 	}
 }
