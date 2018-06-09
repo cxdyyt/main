@@ -5,18 +5,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Vertex {
+public class Vertex<T extends Weight<T>> {
 	boolean startVertex;
 	private int id;
 	private int index = 0;
 	private int rudu = 0;
 	private int fianlRudu;
 	private String detailedContent = null;
-	private List<Vertex> adjacents = new ArrayList<Vertex>();
+	private List<Vertex<T>> adjacents = new ArrayList<Vertex<T>>();
 	private boolean known = false;
-	private Weight inWeight;
-	private Map<Vertex,Weight> outingWeight = new HashMap<Vertex,Weight>(); // every income weight to this vertex
-	Vertex preVertex = null;
+	private T inWeight;
+	private Map<Vertex<T>,T> outingWeight = new HashMap<Vertex<T>,T>(); // every income weight to this vertex
+	Vertex<T> preVertex = null;
 
 	public void resetVertex() {
 		rudu = fianlRudu;
@@ -30,11 +30,11 @@ public class Vertex {
 		return detailedContent;
 	}
 
-	public Vertex getPreVertex() {
+	public Vertex<T> getPreVertex() {
 		return preVertex;
 	}
 
-	public void setPreVertex(Vertex preVertex) {
+	public void setPreVertex(Vertex<T> preVertex) {
 		this.preVertex = preVertex;
 	}
 
@@ -42,11 +42,11 @@ public class Vertex {
 		this.detailedContent = detailedContent;
 	}
 
-	public List<Vertex> getAdjacents() {
+	public List<Vertex<T>> getAdjacents() {
 		return adjacents;
 	}
 
-	public void setAdjacents(List<Vertex> adjacents) {
+	public void setAdjacents(List<Vertex<T>> adjacents) {
 		this.adjacents = adjacents;
 	}
 
@@ -58,11 +58,11 @@ public class Vertex {
 		this.known = known;
 	}
 
-	public Weight getInWeight() {
+	public T getInWeight() {
 		return inWeight;
 	}
 
-	public void setInWeight(Weight inWeight) {
+	public void setInWeight(T inWeight) {
 		this.inWeight = inWeight;
 	}
 
@@ -125,21 +125,21 @@ public class Vertex {
 		System.out.print(this.index + " >> ");
 	}
 
-	public Map<Vertex, Weight> getOutingWeight() {
+	public Map<Vertex<T>, T> getOutingWeight() {
 		return outingWeight;
 	}
 
-	public void setComingWeight(Map<Vertex, Weight> comingWeight) {
+	public void setComingWeight(Map<Vertex<T>, T> comingWeight) {
 		outingWeight = comingWeight;
 	}
 
-	public Weight getNextWeightStepOne() {
+	public T getNextWeightStepOne() {
 		return inWeight.cloneWeightNextBig();
 	}
 
 
-	public Weight getNextWeight(Vertex vert) {
-		return this.inWeight.addWeight(outingWeight.get(vert));
+	public T getNextWeight(Vertex<T> vert) {
+		return this.inWeight.addWeight((T)outingWeight.get(vert));
 	}
 	
 }

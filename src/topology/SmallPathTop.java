@@ -10,10 +10,10 @@ import java.util.Set;
 import Utils.GenerateTopology;
 
 public class SmallPathTop {
-	private Vertex[] vertexs = new Vertex[10];
+	private Vertex<DistancWeight>[] vertexs = new Vertex[10];
 	private String[] detalCon = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
 	private Weight<DistancWeight> weight = new DistancWeight(0);
-	private Vertex topVertex;
+	private Vertex<DistancWeight> topVertex;
 
 	public SmallPathTop() {
 		super();
@@ -38,19 +38,19 @@ public class SmallPathTop {
 		generateSmallPathToOther(topVertex);
 	}
 
-	public void generateSmallPathToOther(Vertex topVertex) {
+	public void generateSmallPathToOther(Vertex<DistancWeight> topVertex) {
 		if (topVertex != null) {
 
 			// Weight currentWei = new DistancWeight(0);
 
-			LinkedList<Vertex> exitVer = new LinkedList<Vertex>();
+			LinkedList<Vertex<DistancWeight>> exitVer = new LinkedList<Vertex<DistancWeight>>();
 			topVertex.setRudu(0);
 			topVertex.setKnown(true);
 			// trySetVetexKnown(topVertex);
 			pushAdjacents(exitVer, topVertex);
 
 			while (!exitVer.isEmpty()) {
-				Vertex vert = exitVer.poll();
+				Vertex<DistancWeight> vert = exitVer.poll();
 				if (vert.getRudu() == 0) {
 					vert.setKnown(true);
 				}
@@ -61,15 +61,15 @@ public class SmallPathTop {
 	}
 
 
-	private void pushAdjacents(LinkedList<Vertex> pushAdjacents, Vertex vertex) {
-		List<Vertex> vetexs = vertex.getAdjacents();
-		for (Vertex vert : vetexs) {
+	private void pushAdjacents(LinkedList<Vertex<DistancWeight>> pushAdjacents, Vertex<DistancWeight> vertex) {
+		List<Vertex<DistancWeight>> vetexs = vertex.getAdjacents();
+		for (Vertex<DistancWeight> vert : vetexs) {
 			if (vert.isKnown()) {
 				continue;
 			}
 
-			Weight<DistancWeight> nextWei = vertex.getNextWeight(vert);
-			Vertex currentPreVer = vert.getPreVertex();
+			DistancWeight nextWei = vertex.getNextWeight(vert);
+			Vertex<DistancWeight> currentPreVer = vert.getPreVertex();
 			if (currentPreVer == null || vert.getInWeight().compareTo(nextWei) > 0) {
 				vert.decreaseRudu();
 				vert.setInWeight(nextWei);
@@ -79,35 +79,35 @@ public class SmallPathTop {
 		}
 	}
 
-	private void addAdjacents(Vertex vertex, int[][] adjacentsIndex) {
-		List<Vertex> adjacents = new ArrayList<Vertex>();
+	private void addAdjacents(Vertex<DistancWeight> vertex, int[][] adjacentsIndex) {
+		List<Vertex<DistancWeight>> adjacents = new ArrayList<Vertex<DistancWeight>>();
 		for (int[] i : adjacentsIndex) {
-			Vertex tmp = vertexs[i[0]];
+			Vertex<DistancWeight> tmp = vertexs[i[0]];
 			tmp.increaseRudu();
 			tmp.setIndex(i[0]);
-			Weight<DistancWeight> inWeight = new DistancWeight(0);
+			DistancWeight inWeight = new DistancWeight(0);
 			tmp.setInWeight(inWeight);
-			Weight<DistancWeight> outingwei = new DistancWeight(i[1]);
+			DistancWeight outingwei = new DistancWeight(i[1]);
 			vertex.getOutingWeight().put(tmp, outingwei );
 			adjacents.add(tmp);
 		}
 		vertex.setAdjacents(adjacents);
 	}
 
-	public Vertex getTopVertex() {
+	public Vertex<DistancWeight> getTopVertex() {
 		return topVertex;
 	}
 
-	public void setTopVertex(Vertex topVertex) {
+	public void setTopVertex(Vertex<DistancWeight> topVertex) {
 		this.topVertex = topVertex;
 		topVertex.setStartVertex(true);
 	}
 
-	public Vertex[] getVertexs() {
+	public Vertex<DistancWeight>[] getVertexs() {
 		return vertexs;
 	}
 
-	public void setVertexs(Vertex[] vertexs) {
+	public void setVertexs(Vertex<DistancWeight>[] vertexs) {
 		this.vertexs = vertexs;
 	}
 
@@ -131,7 +131,7 @@ public class SmallPathTop {
 		SmallPathTop te = new SmallPathTop();
 		te.setTopVertex(te.getVertexs()[0]);
 		te.generateSmallPathToOther();
-		for (Vertex ve : te.getVertexs()) {
+		for (Vertex<DistancWeight> ve : te.getVertexs()) {
 			System.out.println("path from [" + te.getTopVertex().getIndex() + "] to [" + ve.getIndex() + "]");
 			ve.printPath();
 			System.out.print("weight value is :"+ve.getInWeight().getWeightValue());
