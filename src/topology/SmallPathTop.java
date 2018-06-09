@@ -1,11 +1,8 @@
 package topology;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import Utils.GenerateTopology;
 
@@ -20,14 +17,14 @@ public class SmallPathTop {
 		GenerateTopology.generate(vertexs, detalCon, weight);
 
 		addAdjacents(vertexs[0], new int[][] { {1,3}, {2,5} });
-		addAdjacents(vertexs[1], new int[][] { {3,7}, {4,6} });
-		addAdjacents(vertexs[2], new int[][] { {3,12}, {7,2} });
+		addAdjacents(vertexs[1], new int[][] { {3,7}, {4,6},{8,21} });
+		addAdjacents(vertexs[2], new int[][] { {3,12}, {7,2} ,{0,1}});
 		addAdjacents(vertexs[3], new int[][] { {6,15} });
-		addAdjacents(vertexs[4], new int[][] { {5,10} });
+		addAdjacents(vertexs[4], new int[][] { {5,10},{1,11} });
 		addAdjacents(vertexs[5], new int[][] { {8,13} });
 		addAdjacents(vertexs[6], new int[][] { {7,9}, {8,8} });
 		addAdjacents(vertexs[7], new int[][] { {0,8}, {9,4} });
-		addAdjacents(vertexs[8], new int[][] {{1,20}});
+		addAdjacents(vertexs[8], new int[][] {{1,20},{5,2}});
 		addAdjacents(vertexs[9], new int[][] { {6,27} });
 	}
 
@@ -71,7 +68,9 @@ public class SmallPathTop {
 			DistancWeight nextWei = vertex.getNextWeight(vert);
 			Vertex<DistancWeight> currentPreVer = vert.getPreVertex();
 			if (currentPreVer == null || vert.getInWeight().compareTo(nextWei) > 0) {
-				vert.decreaseRudu();
+				if(vertex.isKnown()) {
+					vert.decreaseRudu();
+				}
 				vert.setInWeight(nextWei);
 				vert.setPreVertex(vertex);
 				pushAdjacents.add(vert);
