@@ -15,7 +15,7 @@ public class Vertex<T extends Weight<T>> {
 	private List<Vertex<T>> adjacents = new ArrayList<Vertex<T>>();
 	private boolean known = false;
 	private T inWeight;
-	private Map<Vertex<T>,T> outingWeight = new HashMap<Vertex<T>,T>(); // every income weight to this vertex
+	private Map<Vertex<T>,T> outingWeight = new HashMap<Vertex<T>,T>(); // every out weight from this vertex to the key vertex
 	Vertex<T> preVertex = null;
 
 	public void resetVertex() {
