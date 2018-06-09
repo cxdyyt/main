@@ -5,16 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Vertex<T> {
+public class Vertex {
 	boolean startVertex;
 	private int id;
 	private int index = 0;
 	private int rudu = 0;
 	private int fianlRudu;
-	private T detailedContent = null;
+	private String detailedContent = null;
 	private List<Vertex> adjacents = new ArrayList<Vertex>();
 	private boolean known = false;
 	private Weight inWeight;
+	private Map<Vertex,Weight> outingWeight = new HashMap<Vertex,Weight>(); // every income weight to this vertex
 	Vertex preVertex = null;
 
 	public void resetVertex() {
@@ -25,7 +26,7 @@ public class Vertex<T> {
 		fianlRudu = rudu;
 	}
 
-	public T getDetailedContent() {
+	public String getDetailedContent() {
 		return detailedContent;
 	}
 
@@ -37,7 +38,7 @@ public class Vertex<T> {
 		this.preVertex = preVertex;
 	}
 
-	public void setDetailedContent(T detailedContent) {
+	public void setDetailedContent(String detailedContent) {
 		this.detailedContent = detailedContent;
 	}
 
@@ -124,8 +125,21 @@ public class Vertex<T> {
 		System.out.print(this.index + " >> ");
 	}
 
-	public Weight getNextWeight(Vertex vert) {
+	public Map<Vertex, Weight> getOutingWeight() {
+		return outingWeight;
+	}
+
+	public void setComingWeight(Map<Vertex, Weight> comingWeight) {
+		outingWeight = comingWeight;
+	}
+
+	public Weight getNextWeightStepOne() {
 		return inWeight.cloneWeightNextBig();
 	}
 
+
+	public Weight getNextWeight(Vertex vert) {
+		return this.inWeight.addWeight(outingWeight.get(vert));
+	}
+	
 }

@@ -1,6 +1,6 @@
 package topology;
 
-public class DistancWeight<T extends DistancWeight<T>> implements Weight<T> {
+public class DistancWeight implements Weight<DistancWeight> {
 	int distance = 0;
 	String description = "Distane between two point";
 
@@ -31,7 +31,6 @@ public class DistancWeight<T extends DistancWeight<T>> implements Weight<T> {
 		return description;
 	}
 
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -55,22 +54,9 @@ public class DistancWeight<T extends DistancWeight<T>> implements Weight<T> {
 	}
 
 	@Override
-	public Weight cloneWeight() {
+	public DistancWeight cloneWeight() {
 		DistancWeight weight = new DistancWeight(distance, description);
 		return weight;
-	}
-
-
-	@Override
-	public int compareTo(T o) {
-		
-		if(this == o) {
-			return 0;
-		}
-		if(this.getWeightValue() > o.getWeightValue()) {
-			return 1;
-		}
-		return -1;
 	}
 
 	@Override
@@ -79,8 +65,26 @@ public class DistancWeight<T extends DistancWeight<T>> implements Weight<T> {
 	}
 
 	@Override
-	public Weight cloneWeightNextBig() {
-		return new DistancWeight<T>(distance+1);
+	public DistancWeight cloneWeightNextBig() {
+		return new DistancWeight(distance + 1);
+	}
+
+	@Override
+	public DistancWeight addWeight(DistancWeight wei) {
+		int weightValAdd = this.getWeightValue() + wei.getWeightValue();
+		return new DistancWeight(weightValAdd);
+	}
+
+
+	@Override
+	public int compareTo(DistancWeight o) {
+		if (this == o) {
+			return 0;
+		}
+		if (this.getWeightValue() > o.getWeightValue()) {
+			return 1;
+		}
+		return -1;
 	}
 
 }

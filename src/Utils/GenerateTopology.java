@@ -5,7 +5,7 @@ import topology.Weight;
 
 public class GenerateTopology {
 
-	public static <T> void  generate(Vertex[] vertexs,T[] detailedCons,Weight weight) {
+	public static void  generate(Vertex[] vertexs,String[] detailedCons,Weight weight) {
 		int verLen = vertexs.length;
 		for(int i=0; i<verLen;i++) {
 			Vertex vert = new Vertex();

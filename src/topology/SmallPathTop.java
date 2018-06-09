@@ -12,23 +12,23 @@ import Utils.GenerateTopology;
 public class SmallPathTop {
 	private Vertex[] vertexs = new Vertex[10];
 	private String[] detalCon = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
-	private Weight weight = new DistancWeight(0);
+	private Weight<DistancWeight> weight = new DistancWeight(0);
 	private Vertex topVertex;
 
 	public SmallPathTop() {
 		super();
 		GenerateTopology.generate(vertexs, detalCon, weight);
 
-		addAdjacents(vertexs[0], new int[] { 1, 2 });
-		addAdjacents(vertexs[1], new int[] { 3, 4 });
-		addAdjacents(vertexs[2], new int[] { 3, 7 });
-		addAdjacents(vertexs[3], new int[] { 6 });
-		addAdjacents(vertexs[4], new int[] { 5 });
-		addAdjacents(vertexs[5], new int[] { 8 });
-		addAdjacents(vertexs[6], new int[] { 7, 8 });
-		addAdjacents(vertexs[7], new int[] { 0, 9 });
-		addAdjacents(vertexs[8], new int[] {1});
-		addAdjacents(vertexs[9], new int[] { 6 });
+		addAdjacents(vertexs[0], new int[][] { {1,3}, {2,5} });
+		addAdjacents(vertexs[1], new int[][] { {3,7}, {4,6} });
+		addAdjacents(vertexs[2], new int[][] { {3,12}, {7,2} });
+		addAdjacents(vertexs[3], new int[][] { {6,15} });
+		addAdjacents(vertexs[4], new int[][] { {5,10} });
+		addAdjacents(vertexs[5], new int[][] { {8,13} });
+		addAdjacents(vertexs[6], new int[][] { {7,9}, {8,8} });
+		addAdjacents(vertexs[7], new int[][] { {0,8}, {9,4} });
+		addAdjacents(vertexs[8], new int[][] {{1,20}});
+		addAdjacents(vertexs[9], new int[][] { {6,27} });
 	}
 
 	public void generateSmallPathToOther() throws Exception {
@@ -68,7 +68,7 @@ public class SmallPathTop {
 				continue;
 			}
 
-			Weight nextWei = vertex.getNextWeight(vert);
+			Weight<DistancWeight> nextWei = vertex.getNextWeight(vert);
 			Vertex currentPreVer = vert.getPreVertex();
 			if (currentPreVer == null || vert.getInWeight().compareTo(nextWei) > 0) {
 				vert.decreaseRudu();
@@ -79,14 +79,16 @@ public class SmallPathTop {
 		}
 	}
 
-	private void addAdjacents(Vertex vertex, int[] adjacentsIndex) {
+	private void addAdjacents(Vertex vertex, int[][] adjacentsIndex) {
 		List<Vertex> adjacents = new ArrayList<Vertex>();
-		for (int i : adjacentsIndex) {
-			Vertex tmp = vertexs[i];
+		for (int[] i : adjacentsIndex) {
+			Vertex tmp = vertexs[i[0]];
 			tmp.increaseRudu();
-			tmp.setIndex(i);
-			Weight inWeight = new DistancWeight<>(0);
+			tmp.setIndex(i[0]);
+			Weight<DistancWeight> inWeight = new DistancWeight(0);
 			tmp.setInWeight(inWeight);
+			Weight<DistancWeight> outingwei = new DistancWeight(i[1]);
+			vertex.getOutingWeight().put(tmp, outingwei );
 			adjacents.add(tmp);
 		}
 		vertex.setAdjacents(adjacents);
@@ -117,11 +119,11 @@ public class SmallPathTop {
 		this.detalCon = detalCon;
 	}
 
-	public Weight getWeight() {
+	public Weight<DistancWeight> getWeight() {
 		return weight;
 	}
 
-	public void setWeight(Weight weight) {
+	public void setWeight(Weight<DistancWeight> weight) {
 		this.weight = weight;
 	}
 
