@@ -1,5 +1,6 @@
 package topology;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -7,7 +8,7 @@ import java.util.Random;
 import Utils.GenerateTopology;
 
 public class SmallPathTop {
-	private Vertex<DistancWeight>[] vertexs = new Vertex[100000];
+	private Vertex<DistancWeight>[] vertexs = new Vertex[10000];
 	private String[] detalCon = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
 	private Weight<DistancWeight> weight = new DistancWeight(0);
 	private Vertex<DistancWeight> topVertex;
@@ -35,17 +36,22 @@ public class SmallPathTop {
         int oldCapacity = vertexs.length-1;
 //        Random ran = new Random();
         int jjj = oldCapacity*2;
+        Random ran = new Random(37);
         while(jjj-- >= 0) {
-            Random ran = new Random();
             int left = ran.nextInt(oldCapacity);
-            int right = ran.nextInt(oldCapacity);;
-            int leftDis = disRan.nextInt(100);
-            int rightDis = disRan.nextInt(100);
+            int right = ran.nextInt(oldCapacity);
+            if(left == right) {
+            	continue;
+            }
+            int leftDis = disRan.nextInt(20)+1;
+            int rightDis = disRan.nextInt(20)+1;
 
     		addAdjacents(vertexs[left], new int[][] { {right,leftDis} });
     		addAdjacents(vertexs[right], new int[][] { {left,rightDis} });
             
         }
+
+		addAdjacents(vertexs[0], new int[][] { {1,2} });
 	}
 	
 	public void generateSmallPathToOther() throws Exception {
@@ -133,16 +139,27 @@ public class SmallPathTop {
 		this.weight = weight;
 	}
 
+	public void printAllWay() {
+		for(Vertex<DistancWeight> vertex : vertexs) {
+			List<Vertex<DistancWeight>> vertexAjds = vertex.getAdjacents();
+			for(Vertex<DistancWeight> vt : vertexAjds) {
+				System.out.println(vertex.getIndex() + ">>" + vt.getIndex()+ "|" + vertex.getOutingWeight().get(vt).getWeightValue());
+			}
+		}
+	}
 	public static void main(String[] args) throws Exception {
 		SmallPathTop te = new SmallPathTop();
-		te.setTopVertex(te.getVertexs()[9131]);
+		//te.printAllWay();
+		te.setTopVertex(te.getVertexs()[3]);
+		long startTim = new Date().getTime();
 		te.generateSmallPathToOther();
+		long endTim = new Date().getTime();
 		for (Vertex<DistancWeight> ve : te.getVertexs()) {
 			System.out.println("path from [" + te.getTopVertex().getIndex() + "] to [" + ve.getIndex() + "]");
 			ve.printPath();
-			//System.out.print("weight value is :"+ve.getInWeight().getWeightValue());
+			System.out.print("weight value is :"+(ve.getInWeight() == null ? "" : ve.getInWeight().getWeightValue()));
 			System.out.println("---------------");
 		}
-		System.out.println("");
+		System.out.println("performance is :" + (endTim - startTim));
 	}
 }

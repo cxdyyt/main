@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Vertex<T extends Weight<T>> {
+	private int index = 0;
 	boolean startVertex;
 	private int id;
-	private int index = 0;
 	private int rudu = 0;
 	private int fianlRudu;
 	private String detailedContent = null;
