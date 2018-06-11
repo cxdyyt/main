@@ -1,33 +1,53 @@
 package topology;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import Utils.GenerateTopology;
 
 public class SmallPathTop {
-	private Vertex<DistancWeight>[] vertexs = new Vertex[10];
+	private Vertex<DistancWeight>[] vertexs = new Vertex[100000];
 	private String[] detalCon = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
 	private Weight<DistancWeight> weight = new DistancWeight(0);
 	private Vertex<DistancWeight> topVertex;
 
 	public SmallPathTop() {
 		super();
-		GenerateTopology.generate(vertexs, detalCon, weight);
+		GenerateTopology.generate(vertexs, weight);
 
-		addAdjacents(vertexs[0], new int[][] { {1,3}, {2,5} });
-		addAdjacents(vertexs[1], new int[][] { {0,7},{3,7}, {4,6},{8,1} });
-		addAdjacents(vertexs[2], new int[][] { {3,12}, {7,2} ,{0,1}});
-		addAdjacents(vertexs[3], new int[][] { {2,12},{6,15} });
-		addAdjacents(vertexs[4], new int[][] { {5,10},{1,11} });
-		addAdjacents(vertexs[5], new int[][] { {8,13} });
-		addAdjacents(vertexs[6], new int[][] { {7,9}, {8,8} });
-		addAdjacents(vertexs[7], new int[][] { {0,8}, {9,4} });
-		addAdjacents(vertexs[8], new int[][] {{1,20},{5,2}});
-		addAdjacents(vertexs[9], new int[][] { {6,27} });
+//		addAdjacents(vertexs[0], new int[][] { {1,3}, {2,5} });
+//		addAdjacents(vertexs[1], new int[][] { {0,7},{3,7}, {4,6},{8,1} });
+//		addAdjacents(vertexs[2], new int[][] { {3,12}, {7,2} ,{0,1}});
+//		addAdjacents(vertexs[3], new int[][] { {2,12},{6,15} });
+//		addAdjacents(vertexs[4], new int[][] { {5,10},{1,11} });
+//		addAdjacents(vertexs[5], new int[][] { {8,13} });
+//		addAdjacents(vertexs[6], new int[][] { {7,9}, {8,8} });
+//		addAdjacents(vertexs[7], new int[][] { {0,8}, {9,4} });
+//		addAdjacents(vertexs[8], new int[][] {{1,20},{5,2}});
+//		addAdjacents(vertexs[9], new int[][] { {6,27} });
+		generateDouble();
 	}
 
+
+	private void generateDouble() {
+		Random disRan = new Random(55);
+        int oldCapacity = vertexs.length-1;
+//        Random ran = new Random();
+        int jjj = oldCapacity*2;
+        while(jjj-- >= 0) {
+            Random ran = new Random();
+            int left = ran.nextInt(oldCapacity);
+            int right = ran.nextInt(oldCapacity);;
+            int leftDis = disRan.nextInt(100);
+            int rightDis = disRan.nextInt(100);
+
+    		addAdjacents(vertexs[left], new int[][] { {right,leftDis} });
+    		addAdjacents(vertexs[right], new int[][] { {left,rightDis} });
+            
+        }
+	}
+	
 	public void generateSmallPathToOther() throws Exception {
 		if (topVertex == null) {
 			throw new Exception("Top vertex is null");
@@ -67,7 +87,7 @@ public class SmallPathTop {
 	}
 
 	private void addAdjacents(Vertex<DistancWeight> vertex, int[][] adjacentsIndex) {
-		List<Vertex<DistancWeight>> adjacents = new ArrayList<Vertex<DistancWeight>>();
+		List<Vertex<DistancWeight>> adjacents = vertex.getAdjacents();
 		for (int[] i : adjacentsIndex) {
 			Vertex<DistancWeight> tmp = vertexs[i[0]];
 			tmp.increaseRudu();
@@ -78,7 +98,6 @@ public class SmallPathTop {
 			vertex.getOutingWeight().put(tmp, outingwei );
 			adjacents.add(tmp);
 		}
-		vertex.setAdjacents(adjacents);
 	}
 
 	public Vertex<DistancWeight> getTopVertex() {
@@ -116,12 +135,12 @@ public class SmallPathTop {
 
 	public static void main(String[] args) throws Exception {
 		SmallPathTop te = new SmallPathTop();
-		te.setTopVertex(te.getVertexs()[8]);
+		te.setTopVertex(te.getVertexs()[9131]);
 		te.generateSmallPathToOther();
 		for (Vertex<DistancWeight> ve : te.getVertexs()) {
 			System.out.println("path from [" + te.getTopVertex().getIndex() + "] to [" + ve.getIndex() + "]");
 			ve.printPath();
-			System.out.print("weight value is :"+ve.getInWeight().getWeightValue());
+			//System.out.print("weight value is :"+ve.getInWeight().getWeightValue());
 			System.out.println("---------------");
 		}
 		System.out.println("");

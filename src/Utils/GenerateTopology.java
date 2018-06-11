@@ -14,6 +14,14 @@ public class GenerateTopology {
 			vertexs[i] = vert;
 		}
 	}
+	public static void  generate(Vertex[] vertexs,Weight weight) {
+		int verLen = vertexs.length;
+		for(int i=0; i<verLen;i++) {
+			Vertex vert = new Vertex();
+			vert.setId(i);
+			vertexs[i] = vert;
+		}
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
