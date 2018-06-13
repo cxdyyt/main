@@ -20,8 +20,8 @@ public class SmallPathTop {
 		addAdjacents(vertexs[0], new int[][] { {1,-100}, {2,5} });
 		addAdjacents(vertexs[1], new int[][] { {0,7},{3,7}, {4,6},{8,1} });
 		addAdjacents(vertexs[2], new int[][] { {3,12}, {7,2} ,{0,1}});
-		addAdjacents(vertexs[3], new int[][] { {2,12},{6,-500} });
-		addAdjacents(vertexs[4], new int[][] { {5,10},{1,-100} });
+		addAdjacents(vertexs[3], new int[][] { {2,12},{6,15} });
+		addAdjacents(vertexs[4], new int[][] { {5,10},{1,11} });
 		addAdjacents(vertexs[5], new int[][] { {8,13} });
 		addAdjacents(vertexs[6], new int[][] { {7,9}, {8,8} });
 		addAdjacents(vertexs[7], new int[][] { {0,8}, {9,4} });
