@@ -7,7 +7,8 @@ import java.util.Map;
 
 public class Vertex<T extends Weight<T>> {
 	private int index = 0;
-	boolean startVertex;
+	private boolean isInQueue = false;
+	private boolean startVertex;
 	private int id;
 	private int rudu = 0;
 	private int fianlRudu;
@@ -140,6 +141,18 @@ public class Vertex<T extends Weight<T>> {
 
 	public T getNextWeight(Vertex<T> vert) {
 		return this.inWeight.addWeight((T)outingWeight.get(vert));
+	}
+
+	public boolean isInQueue() {
+		return isInQueue;
+	}
+
+	public void setInQueue(boolean isInQueue) {
+		this.isInQueue = isInQueue;
+	}
+
+	public void setOutingWeight(Map<Vertex<T>, T> outingWeight) {
+		this.outingWeight = outingWeight;
 	}
 	
 }

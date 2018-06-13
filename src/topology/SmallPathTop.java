@@ -8,7 +8,7 @@ import java.util.Random;
 import Utils.GenerateTopology;
 
 public class SmallPathTop {
-	private Vertex<DistancWeight>[] vertexs = new Vertex[10000];
+	private Vertex<DistancWeight>[] vertexs = new Vertex[100000];
 	private String[] detalCon = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
 	private Weight<DistancWeight> weight = new DistancWeight(0);
 	private Vertex<DistancWeight> topVertex;
@@ -87,7 +87,10 @@ public class SmallPathTop {
 			if (currentPreVer == null || vert.getInWeight().compareTo(nextWei) > 0) {
 				vert.setInWeight(nextWei);
 				vert.setPreVertex(vertex);
-				pushAdjacents.add(vert);
+				if(!vert.isInQueue()) {
+					pushAdjacents.add(vert);
+					vert.setInQueue(true);
+				}
 			}
 		}
 	}
