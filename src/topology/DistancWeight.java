@@ -87,4 +87,9 @@ public class DistancWeight implements Weight<DistancWeight> {
 		return -1;
 	}
 
+	@Override
+	public String toString() {
+		return "DistancWeight [distance=" + distance + "]";
+	}
+
 }

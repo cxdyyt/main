@@ -8,7 +8,7 @@ import java.util.Random;
 import Utils.GenerateTopology;
 
 public class SmallPathTop {
-	private Vertex<DistancWeight>[] vertexs = new Vertex[100000];
+	private Vertex<DistancWeight>[] vertexs = new Vertex[10];
 	private String[] detalCon = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
 	private Weight<DistancWeight> weight = new DistancWeight(0);
 	private Vertex<DistancWeight> topVertex;
@@ -17,17 +17,17 @@ public class SmallPathTop {
 		super();
 		GenerateTopology.generate(vertexs, weight);
 
-//		addAdjacents(vertexs[0], new int[][] { {1,3}, {2,5} });
-//		addAdjacents(vertexs[1], new int[][] { {0,7},{3,7}, {4,6},{8,1} });
-//		addAdjacents(vertexs[2], new int[][] { {3,12}, {7,2} ,{0,1}});
-//		addAdjacents(vertexs[3], new int[][] { {2,12},{6,15} });
-//		addAdjacents(vertexs[4], new int[][] { {5,10},{1,11} });
-//		addAdjacents(vertexs[5], new int[][] { {8,13} });
-//		addAdjacents(vertexs[6], new int[][] { {7,9}, {8,8} });
-//		addAdjacents(vertexs[7], new int[][] { {0,8}, {9,4} });
-//		addAdjacents(vertexs[8], new int[][] {{1,20},{5,2}});
-//		addAdjacents(vertexs[9], new int[][] { {6,27} });
-		generateDouble();
+		addAdjacents(vertexs[0], new int[][] { {1,-100}, {2,5} });
+		addAdjacents(vertexs[1], new int[][] { {0,7},{3,7}, {4,6},{8,1} });
+		addAdjacents(vertexs[2], new int[][] { {3,12}, {7,2} ,{0,1}});
+		addAdjacents(vertexs[3], new int[][] { {2,12},{6,-500} });
+		addAdjacents(vertexs[4], new int[][] { {5,10},{1,-100} });
+		addAdjacents(vertexs[5], new int[][] { {8,13} });
+		addAdjacents(vertexs[6], new int[][] { {7,9}, {8,8} });
+		addAdjacents(vertexs[7], new int[][] { {0,8}, {9,4} });
+		addAdjacents(vertexs[8], new int[][] {{5,2}});
+		addAdjacents(vertexs[9], new int[][] { {6,27} });
+//		generateDouble();
 	}
 
 
@@ -65,17 +65,17 @@ public class SmallPathTop {
 		if (topVertex != null) {
 
 			LinkedList<Vertex<DistancWeight>> exitVer = new LinkedList<Vertex<DistancWeight>>();
-			pushAdjacents(exitVer, topVertex);
+			caculateSmallestPathWeightOfAdjs(exitVer, topVertex);
 
 			while (!exitVer.isEmpty()) {
 				Vertex<DistancWeight> vert = exitVer.poll();
-				pushAdjacents(exitVer, vert);
+				caculateSmallestPathWeightOfAdjs(exitVer, vert);
 			}
 		}
 	}
 
 
-	private void pushAdjacents(LinkedList<Vertex<DistancWeight>> pushAdjacents, Vertex<DistancWeight> vertex) {
+	private void caculateSmallestPathWeightOfAdjs(LinkedList<Vertex<DistancWeight>> pushAdjacents, Vertex<DistancWeight> vertex) {
 		List<Vertex<DistancWeight>> vetexs = vertex.getAdjacents();
 		for (Vertex<DistancWeight> vert : vetexs) {
 			if (vert == topVertex) {
@@ -90,6 +90,9 @@ public class SmallPathTop {
 				if(!vert.isInQueue()) {
 					pushAdjacents.add(vert);
 					vert.setInQueue(true);
+				}else{
+					// smallest path change for ver, then re generate all path from ver to all other point
+					caculateSmallestPathWeightOfAdjs(pushAdjacents, vert);
 				}
 			}
 		}
@@ -153,7 +156,7 @@ public class SmallPathTop {
 	public static void main(String[] args) throws Exception {
 		SmallPathTop te = new SmallPathTop();
 		//te.printAllWay();
-		te.setTopVertex(te.getVertexs()[3]);
+		te.setTopVertex(te.getVertexs()[0]);
 		long startTim = new Date().getTime();
 		te.generateSmallPathToOther();
 		long endTim = new Date().getTime();
