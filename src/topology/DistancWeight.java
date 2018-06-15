@@ -83,8 +83,11 @@ public class DistancWeight implements Weight<DistancWeight> {
 		}
 		if (this.getWeightValue() > o.getWeightValue()) {
 			return 1;
+		}else if(this.getWeightValue() == o.getWeightValue())  {
+			return 0;
+		}else {
+			return -1;
 		}
-		return -1;
 	}
 
 	@Override

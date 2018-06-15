@@ -8,6 +8,14 @@ public class SmallPathTop<T extends Weight<T>> extends AbsctractSmallPath<T> imp
 	private Vertex<T>[] vertexs;
 	Vertex<T> topVertex;
 
+	
+	
+	public SmallPathTop() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public SmallPathTop(Vertex<T>[] vertexs) {
 		super();
 		this.vertexs = vertexs;

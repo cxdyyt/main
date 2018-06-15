@@ -7,13 +7,14 @@ import java.util.Map;
 import topology.Dijkstra;
 import topology.DistancWeight;
 import topology.SmallPath;
+import topology.SmallPathTop;
 import topology.TopoUtils;
 import topology.Vertex;
 
 public class SmallPathTest {
 
-	public static void main(String[] args) throws Exception {
-		Vertex<DistancWeight>[] vertexsfff = new Vertex[10];
+	public static Vertex<DistancWeight>[] geneateStrategy(Class<? extends SmallPath> smallPathType) throws Exception{
+		Vertex<DistancWeight>[] vertexsfff = new Vertex[100];
 		Map<Integer,Integer[][]> pathMap = new HashMap<Integer,Integer[][]>();
 
 		pathMap.put(0, new Integer[][] { {1,3}, {2,5} });
@@ -27,24 +28,44 @@ public class SmallPathTest {
 		pathMap.put(8, new Integer[][] {{5,2}});
 		pathMap.put(9, new Integer[][] { {6,27} });
 		
-		TopoUtils.generatorVertexs(vertexsfff, pathMap , DistancWeight.class);
-		
-		SmallPath<DistancWeight> te = new Dijkstra<DistancWeight>(vertexsfff);
-		
+		//TopoUtils.generatorVertexs(vertexsfff, pathMap , DistancWeight.class);
+		TopoUtils.generateRandom(vertexsfff, DistancWeight.class);
+		SmallPath smallPath = smallPathType.newInstance();
+		smallPath.setVertexs(vertexsfff);
 		//te.printAllWay();
-		te.setTopVertex((Vertex<DistancWeight>) te.getVertexs()[0],DistancWeight.class);
+		smallPath .setTopVertex((Vertex<DistancWeight>) smallPath.getVertexs()[0],DistancWeight.class);
 		long startTim = new Date().getTime();
-		te.generateSmallPathToOther();
+		smallPath.generateSmallPathToOther();
 		long endTim = new Date().getTime();
+		return vertexsfff;
+	}
+	
+	public static void main(String[] args) throws Exception {
 		
-		for (Vertex<DistancWeight> ve : te.getVertexs()) {
-			System.out.println("path from [" + te.getTopVertex().getIndex() + "] to [" + ve.getIndex() + "]");
-			ve.printPath();
-			System.out.print("weight value is :"+(ve.getInWeight() == null ? "" : ve.getInWeight().getWeightValue()));
-			System.out.println("---------------");
+		
+		
+
+		
+		Vertex<DistancWeight>[] res1 = geneateStrategy(SmallPathTop.class);
+		Vertex<DistancWeight>[] res2 = geneateStrategy(Dijkstra.class);
+		TopoUtils.isTwoStrategyEqual(res1, res2);
+		
+		for (int i=0;i<res1.length;i++) {
+			System.out.println("path from 0 to [" + res1[i].getIndex() + "]");
+			res1[i].printPath();
+			System.out.println();
+			res2[i].printPath();
+			System.out.println("---------------------");
+			System.out.println("weight value is :"+(res1[i].getInWeight() == null ? "" : res1[i].getInWeight().getWeightValue()));
+			System.out.println("weight value is :"+(res2[i].getInWeight() == null ? "" : res2[i].getInWeight().getWeightValue()));
 		}
-//		te.getVertexs()[2].printPath();
-		System.out.println("performance is :" + (endTim - startTim));
+//		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//		for (Vertex<DistancWeight> ve : res2) {
+//			System.out.println("path from 0 to [" + ve.getIndex() + "]");
+//			ve.printPath();
+//			System.out.print("weight value is :"+(ve.getInWeight() == null ? "" : ve.getInWeight().getWeightValue()));
+//			System.out.println("---------------");
+//		}
 	}
 
 }

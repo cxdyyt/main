@@ -9,6 +9,12 @@ public class Dijkstra<T extends Weight<T>> extends SmallPathTop<T>{
 	LeftistHeap<Vertex<T>> heaps = new LeftistHeap<Vertex<T>>();
 	
 
+	public Dijkstra() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public Dijkstra(Vertex<T>[] vertexs) {
 		super(vertexs);
 	}
