@@ -114,6 +114,12 @@ public class LeftistHeap<T extends Comparable<T>> implements HeapInterface<T>{
 		return subNode;
 	}
 	
+	public void initHeap(T[] arrs) {
+		for(T t : arrs) {
+			this.insert(t);
+		}
+	}
+	
 	public NodeLeftist<T> getTop() {
 		return top;
 	}

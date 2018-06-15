@@ -12,7 +12,7 @@ public class TopologyEntity {
 	private Weight weight = new DistancWeight();
 	public TopologyEntity() {
 		super();
-		GenerateTopology.generate(vertexs, detalCon, weight);
+		GenerateTopology.generate(vertexs, detalCon);
 		
 		addAdjacents(vertexs[0], new int[] {1,2});
 		addAdjacents(vertexs[1], new int[] {3,4});

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Vertex<T extends Weight<T>> {
+public class Vertex<T extends Weight<T>> implements Comparable<Vertex<T>>{
 	private int index = 0;
 	private boolean isInQueue = false;
 	private boolean startVertex;
@@ -153,6 +153,17 @@ public class Vertex<T extends Weight<T>> {
 
 	public void setOutingWeight(Map<Vertex<T>, T> outingWeight) {
 		this.outingWeight = outingWeight;
+	}
+
+	@Override
+	public String toString() {
+		return "Vertex [index=" + index + ", isInQueue=" + isInQueue + ", startVertex=" + startVertex + ", inWeight="
+				+ inWeight + "]";
+	}
+
+	@Override
+	public int compareTo(Vertex<T> o) {
+		return this.getInWeight().compareTo(o.getInWeight());
 	}
 	
 }
