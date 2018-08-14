@@ -12,7 +12,11 @@ public class StringUtils {
 	public static void println(Object obj){
 		System.out.println(obj);
 	}
+	
 	public static void println(Object obj[]){
 		System.out.println(Arrays.toString(obj));
+	}
+	public static boolean isEmpty(String str){
+		return (str == null || str.trim().equals(""));
 	}
 }

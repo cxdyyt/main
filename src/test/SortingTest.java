@@ -106,5 +106,9 @@ public class SortingTest {
 		for(Class cls : keys) {
 			System.out.println(cls.getSimpleName() + " fasted count times is[" + fastTimesResult.get(cls) + "]");
 		}
+		int[] tmp = {1,2,3};
+		int[] tmp1 = tmp.clone();
+		tmp1[0] = 10;
+		System.out.println(tmp1);
 	}
 }
