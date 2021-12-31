@@ -62,6 +62,9 @@ public class LockTest {
         for (int i = 0; i < 1000; i++) {
             map.put(rd.nextInt(1000), rd.nextInt(1000));
         }
+        synchronized (LockTest.class) {
+
+        }
         System.out.println(map);
         // Integer i = Integer.valueOf(232);
         // read();
@@ -89,7 +92,7 @@ public class LockTest {
         //
         // float fl = 1e+2f;
         System.out.println(sht >>> 2);
-        System.out.println(sht);
+        System.out.println(3 / 2);
 
     }
 }
