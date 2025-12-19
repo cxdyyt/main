@@ -34,6 +34,14 @@ public class ProducerConfiguration {
         // It is recommended to leave it at the maximum or a very high number, 
         // allowing the producer to retry indefinitely until the delivery.timeout.ms is reached.
         props.put("retries", Integer.MAX_VALUE);
+
+        // 6. Delivery Timeout
+        // This places an upper bound on the time to report success or failure after a call to send().
+        // This limits the total time that a record will be delayed prior to sending, the time to await
+        // acknowledgement from the broker (if expected), and the time allowed for retriable send failures.
+        // Default is 120000 ms (2 minutes).
+        // Since retries is set to MAX_VALUE, this parameter effectively controls the retry duration.
+        props.put("delivery.timeout.ms", 120000);
         
         // 5. Max In-Flight Requests
         // To guarantee ordering while retrying, this must be <= 5.
