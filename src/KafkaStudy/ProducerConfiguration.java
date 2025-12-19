@@ -42,6 +42,18 @@ public class ProducerConfiguration {
         // Default is 120000 ms (2 minutes).
         // Since retries is set to MAX_VALUE, this parameter effectively controls the retry duration.
         props.put("delivery.timeout.ms", 120000);
+
+        // 7. Blocking Behavior & Max Block Time
+        // Q: Will constant retries block subsequent messages?
+        // A: 
+        // 1. Same Partition: YES, delivery is blocked. 
+        //    To guarantee order (Exactly Once), Message N+1 cannot be committed before Message N.
+        //    If Message N is retrying, Message N+1 waits in the queue or in-flight.
+        // 2. Different Partitions: NO.
+        // 3. User Thread (send() method): NO, unless the buffer is full.
+        //    The send() method is asynchronous. It only blocks if the buffer (buffer.memory) is full.
+        //    'max.block.ms' controls how long send() blocks when buffer is full (default 60s).
+        props.put("max.block.ms", 60000);
         
         // 5. Max In-Flight Requests
         // To guarantee ordering while retrying, this must be <= 5.
