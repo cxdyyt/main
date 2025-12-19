@@ -120,4 +120,23 @@ public class LagAnalyzer {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 概念澄清：多Consumer Group 场景下的 Lag
+     * 
+     * Q: 一个Topic被 GroupA 和 GroupB 消费。GroupA 消费完了，GroupB 还有大量未消费。这算积压吗？
+     * A: 
+     * 1. 对 GroupA 来说：没有积压 (Lag = 0)。
+     * 2. 对 GroupB 来说：有严重积压 (Lag > 0)。
+     * 3. 对 Kafka Broker 来说：消息都在磁盘上，并没有“消失”。
+     * 
+     * 结论：消息积压（Lag）是【Consumer Group 级别】的概念，不是 Topic 级别的。
+     * 不同的 Group 之间互不影响。GroupB 的积压完全取决于 GroupB 自己的消费速度。
+     */
+    public static void explainMultiGroupLag() {
+        System.out.println("Kafka 的 Lag 是相对于 Consumer Group 而言的。");
+        System.out.println("Group A Lag: 0  (健康)");
+        System.out.println("Group B Lag: 10000 (积压)");
+        System.out.println("这两个状态同时存在是完全正常的。");
+    }
 }
